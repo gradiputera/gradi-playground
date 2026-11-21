@@ -11,8 +11,8 @@ Verification note: the SQL tasks are verified with `supabase test db`. Run it lo
 
 ## 2. Service schemas and roles (spec: platform-database)
 
-- [ ] 2.1 Write `supabase/migrations/20261121000100_service_schemas_and_roles.sql` per design D2: five roles, five schemas owned by their role, `search_path`, and the revokes for `public`, `anon`, `authenticated` and `service_role`. Verify: it applies on `supabase db reset` (locally or in CI).
-- [ ] 2.2 Write `supabase/tests/001_platform_database.test.sql`, covering: the five schemas exist; the owner is the matching role; a table created by `ledger_service` lands in `ledger`; cross-schema select and create raise permission errors; `anon` and `authenticated` have no usage; and no tables exist in service schemas after the platform migrations. Verify: `supabase test db` passes.
+- [x] 2.1 Write `supabase/migrations/20261121000100_service_schemas_and_roles.sql` per design D2: five roles, five schemas owned by their role, `search_path`, and the revokes for `public`, `anon`, `authenticated` and `service_role`. Verify: it applies on `supabase db reset` (locally or in CI).
+- [x] 2.2 Write `supabase/tests/001_platform_database.test.sql`, covering: the five schemas exist; the owner is the matching role; a table created by `ledger_service` lands in `ledger`; cross-schema select and create raise permission errors; `anon` and `authenticated` have no usage; and no tables exist in service schemas after the platform migrations. Verify: `supabase test db` passes.
 
 ## 3. Event bus publish (spec: eventing)
 
