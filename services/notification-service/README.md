@@ -24,7 +24,23 @@ Planned
 - Publishes: none.
 - Consumes: `payment.succeeded.v1`, `payment.failed.v1` (queue `payment.events.notification`).
 
+## Mail module
+
+- Triggered only by consumed events; there is no endpoint that sends mail on request.
+- Fixed templates. The user controls only the amount and currency; no free-text bodies.
+- Every email has a "sandbox demo" footer.
+- Caps: 3 emails per user per day; 100 emails globally per day. The module refuses to send when a cap is reached, and the payment is unaffected.
+- Failures are logged without the address and never fail the payment.
+- Optional IMAP polling reads bounces so the timeline shows delivered or bounced.
+
+## Masking and retention
+
+- Telemetry shows masked addresses only, for example `j***@gmail.com`.
+- Addresses are stored only in the `notification` schema.
+- Addresses are deleted on sandbox reset and in the nightly cleanup.
+
 ## Related
 
 - [ADR 0014: Real email via Gmail SMTP](../../architecture/adr/0014-real-email-via-gmail-smtp.md)
 - [ADR 0005: Events with pgmq and webhooks](../../architecture/adr/0005-kafka-like-events-with-pgmq-and-webhooks.md)
+- [Event contracts](../../contracts/events/README.md)
