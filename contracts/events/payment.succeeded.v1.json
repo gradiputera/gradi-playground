@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gradi-playground.local/contracts/events/payment.succeeded.v1.json",
+  "title": "payment.succeeded.v1",
+  "description": "CloudEvents 1.0 envelope for a successful simulated payment.",
+  "type": "object",
+  "required": ["specversion", "id", "source", "type", "time", "datacontenttype", "traceparent", "site", "data"],
+  "properties": {
+    "specversion": { "const": "1.0" },
+    "id": { "type": "string", "minLength": 1 },
+    "source": { "type": "string", "format": "uri-reference" },
+    "type": { "const": "payment.succeeded.v1" },
+    "time": { "type": "string", "format": "date-time" },
+    "datacontenttype": { "const": "application/json" },
+    "traceparent": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{2}-[0-9a-f]{32}-[0-9a-f]{16}-[0-9a-f]{2}$"
+    },
+    "site": { "enum": ["DC", "DRC"] },
+    "data": {
+      "type": "object",
+      "required": ["payment_id", "user_id", "amount_minor", "currency", "scenario", "outcome", "recipient_email"],
+      "properties": {
+        "payment_id": { "type": "string", "minLength": 1 },
+        "user_id": { "type": "string", "minLength": 1 },
+        "amount_minor": { "type": "integer", "minimum": 1 },
+        "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+        "scenario": { "enum": ["success", "declined", "timeout", "insufficient_funds"] },
+        "outcome": { "const": "succeeded" },
+        "recipient_email": { "type": ["string", "null"], "format": "email" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

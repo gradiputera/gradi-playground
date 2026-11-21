@@ -1,0 +1,37 @@
+openapi: 3.1.0
+x-status: planned
+info:
+  title: account-service API
+  version: 0.1.0
+servers: []
+security:
+  - bearerAuth: []
+paths:
+  /health:
+    get:
+      summary: Health check
+      security: []
+      responses:
+        "200":
+          description: Service is healthy.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    const: ok
+  /sandbox/reset:
+    post:
+      summary: Reset the caller's sandbox accounts to seed
+      responses:
+        "200":
+          description: Caller's rows were deleted and the seed was re-applied.
+        "401":
+          description: Missing or invalid bearer token.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

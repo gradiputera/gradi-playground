@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gradi-playground.local/contracts/events/ledger.entry-posted.v1.json",
+  "title": "ledger.entry-posted.v1",
+  "description": "CloudEvents 1.0 envelope for a balanced journal entry posted by ledger-service.",
+  "type": "object",
+  "required": ["specversion", "id", "source", "type", "time", "datacontenttype", "traceparent", "site", "data"],
+  "properties": {
+    "specversion": { "const": "1.0" },
+    "id": { "type": "string", "minLength": 1 },
+    "source": { "type": "string", "format": "uri-reference" },
+    "type": { "const": "ledger.entry-posted.v1" },
+    "time": { "type": "string", "format": "date-time" },
+    "datacontenttype": { "const": "application/json" },
+    "traceparent": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{2}-[0-9a-f]{32}-[0-9a-f]{16}-[0-9a-f]{2}$"
+    },
+    "site": { "enum": ["DC", "DRC"] },
+    "data": {
+      "type": "object",
+      "required": ["entry_id", "payment_id", "lines"],
+      "properties": {
+        "entry_id": { "type": "string", "minLength": 1 },
+        "payment_id": { "type": "string", "minLength": 1 },
+        "lines": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "required": ["account", "debit_minor", "credit_minor"],
+            "properties": {
+              "account": { "type": "string", "pattern": "^[0-9]{4}$" },
+              "debit_minor": { "type": "integer", "minimum": 0 },
+              "credit_minor": { "type": "integer", "minimum": 0 }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

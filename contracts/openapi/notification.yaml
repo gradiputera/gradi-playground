@@ -1,0 +1,46 @@
+openapi: 3.1.0
+x-status: planned
+info:
+  title: notification-service API
+  version: 0.1.0
+servers: []
+security:
+  - bearerAuth: []
+paths:
+  /health:
+    get:
+      summary: Health check
+      security: []
+      responses:
+        "200":
+          description: Service is healthy.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    const: ok
+  /events:
+    post:
+      summary: Receive a signed CloudEvent from the dispatcher
+      security: []
+      responses:
+        "2xx":
+          description: Event accepted (processed or already seen).
+        "401":
+          description: Signature or timestamp check failed.
+  /sandbox/reset:
+    post:
+      summary: Delete the caller's notifications and stored addresses
+      responses:
+        "200":
+          description: Caller's rows were deleted.
+        "401":
+          description: Missing or invalid bearer token.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

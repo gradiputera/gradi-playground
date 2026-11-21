@@ -1,0 +1,69 @@
+openapi: 3.1.0
+x-status: planned
+info:
+  title: ledger-service API
+  version: 0.1.0
+servers: []
+security:
+  - bearerAuth: []
+paths:
+  /health:
+    get:
+      summary: Health check
+      security: []
+      responses:
+        "200":
+          description: Service is healthy.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    const: ok
+  /ledger/postings:
+    post:
+      summary: Post a balanced journal entry for a payment outcome
+      responses:
+        "201":
+          description: Entry posted.
+        "401":
+          description: Missing or invalid bearer token.
+  /ledger/journal:
+    get:
+      summary: List journal entries for the caller's sandbox
+      responses:
+        "200":
+          description: Journal entries.
+        "401":
+          description: Missing or invalid bearer token.
+  /ledger/general-ledger:
+    get:
+      summary: General ledger per account with running balance
+      responses:
+        "200":
+          description: General ledger report.
+        "401":
+          description: Missing or invalid bearer token.
+  /ledger/trial-balance:
+    get:
+      summary: Trial balance (debits equal credits)
+      responses:
+        "200":
+          description: Trial balance.
+        "401":
+          description: Missing or invalid bearer token.
+  /sandbox/reset:
+    post:
+      summary: Reset the caller's ledger to the chart of accounts and opening entries
+      responses:
+        "200":
+          description: Caller's rows were deleted and the seed was re-applied.
+        "401":
+          description: Missing or invalid bearer token.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
