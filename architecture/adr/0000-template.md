@@ -1,6 +1,6 @@
 # NNNN. Title
 
-- Status: Proposed | Accepted | Superseded by [NNNN](NNNN-slug.md)
+- Status: Proposed | Accepted | Superseded by NNNN (link the new ADR file)
 - Date: YYYY-MM-DD
 
 ## Context
