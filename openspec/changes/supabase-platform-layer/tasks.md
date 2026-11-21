@@ -21,8 +21,8 @@ Verification note: the SQL tasks are verified with `supabase test db`. Run it lo
 
 ## 4. Dispatcher, signature and operator functions (spec: eventing)
 
-- [ ] 4.1 Write `supabase/migrations/20261121000300_eventbus_dispatcher.sql` per design D4 to D6: the `deliveries` table, the backoff function, the signing function (Standard Webhooks, Vault secret per group), `dispatch_tick()` with an advisory lock and the settle and send phases, `replay()`, `redrive_dlq()` and the `delivery_status` view, all executable by `postgres` only. Verify: it applies and `supabase db lint --fail-on error` passes.
-- [ ] 4.2 Write `supabase/tests/003_eventbus_dispatcher.test.sql`. Each test creates its own Vault secret and endpoint inside the test transaction. It covers:
+- [x] 4.1 Write `supabase/migrations/20261121000300_eventbus_dispatcher.sql` per design D4 to D6: the `deliveries` table, the backoff function, the signing function (Standard Webhooks, Vault secret per group), `dispatch_tick()` with an advisory lock and the settle and send phases, `replay()`, `redrive_dlq()` and the `delivery_status` view, all executable by `postgres` only. Verify: it applies and `supabase db lint --fail-on error` passes.
+- [x] 4.2 Write `supabase/tests/003_eventbus_dispatcher.test.sql`. Each test creates its own Vault secret and endpoint inside the test transaction. It covers:
   - the signature equals a vector computed independently in the test from `hmac(...)` over `id.ts.body`;
   - the queued `net.http_request_queue` body equals `event::text` and the headers include `content-type`, `traceparent`, `baggage: site=DRC` and the three `webhook-*` headers;
   - the timeout is 5000 ms;

@@ -87,7 +87,9 @@ pg_net is asynchronous: `net.http_post` returns a request id, and the response a
 2. **Send.** For each enabled consumer that has an endpoint and a signing secret:
    - `pgmq.read(evt_<group>, vt => 30, qty => 10)`;
    - a message with `read_ct > max_attempts` is sent to `evt_<group>_dlq` and deleted from the main queue;
-   - otherwise call `pgmq.set_vt(..., backoff(read_ct))` with `backoff(n) = least(300, 10 * 2^(n-1))` seconds, which gives 10, 20, 40, 80, 160, 300. Then call `net.http_post(..., timeout_milliseconds => 5000)` and record the delivery.
+   - otherwise call `pgmq.set_vt(..., backoff(read_ct))` with `backoff(n) = least(300, 10 * 2^(n-1))` seconds, which gives 10, 20, 40, 80, 160, 300. Then queue the request in `net.http_request_queue` with a 5000 ms timeout, record the delivery, and call `net.wake()` once at the end.
+
+`net.http_post` refuses any content type other than `application/json`, so the dispatcher inserts into `net.http_request_queue` directly. That is the same insert `http_post` performs, with `application/cloudevents+json`.
 
 A transaction-level advisory lock prevents overlapping ticks. Settling runs before sending, so a delivery acknowledged within its backoff is archived before the message would be visible again. Duplicate delivery is still possible in edge cases, which the inbox requirement covers (at-least-once delivery).
 
@@ -189,7 +191,8 @@ These values are deliberately low-entropy, prefixed and documented as non-secret
 
 ## Risks / Trade-offs
 
-- [pg_net serializes the `jsonb` body differently from `event::text`, which would invalidate signatures] → a test asserts byte equality on the queued request. If it ever fails, switch to the text-body variant of the request.
+- [The signed text differs from the bytes sent, which would invalidate signatures] → the dispatcher queues `convert_to(event::text, 'UTF8')` itself and signs the same text. A test asserts byte equality on the queued request.
+- [Inserting into `net.http_request_queue` depends on a pg_net internal table] → the dispatcher tests break on a pg_net upgrade that changes it. CI pins the CLI and therefore the Postgres image.
 - [Free project pauses after 7 days without activity, and cron does not count as activity] → documented in the README. The owner restores the project from the dashboard.
 - [Edge-case duplicate deliveries] → accepted by design (at-least-once); consumers dedupe through the inbox.
 - [Hosted Supabase version lags or differs from the local CLI image] → CI pins the CLI version. The owner runs `supabase db push --dry-run` before pushing.
