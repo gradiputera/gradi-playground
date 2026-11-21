@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gradi-playground.local/contracts/events/platform.sandbox-nightly-reset.v1.json",
+  "title": "platform.sandbox-nightly-reset.v1",
+  "description": "CloudEvents 1.0 envelope broadcast nightly by the platform scheduler. Each service resets the sandbox data in its own schema on receipt.",
+  "type": "object",
+  "required": ["specversion", "id", "source", "type", "time", "datacontenttype", "traceparent", "site", "data"],
+  "properties": {
+    "specversion": { "const": "1.0" },
+    "id": { "type": "string", "minLength": 1 },
+    "source": { "const": "platform/cron" },
+    "type": { "const": "platform.sandbox-nightly-reset.v1" },
+    "time": { "type": "string", "format": "date-time" },
+    "datacontenttype": { "const": "application/json" },
+    "traceparent": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{2}-[0-9a-f]{32}-[0-9a-f]{16}-[0-9a-f]{2}$"
+    },
+    "site": { "enum": ["DC", "DRC"] },
+    "data": {
+      "type": "object",
+      "required": ["reset_date"],
+      "properties": {
+        "reset_date": { "type": "string", "format": "date" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,49 @@
+name: supabase
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "supabase/**"
+      - ".github/workflows/supabase.yml"
+  pull_request:
+    paths:
+      - "supabase/**"
+      - ".github/workflows/supabase.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  database-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      # Dummy values so env() references in config.toml resolve. Not real credentials.
+      SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_ID: ci-dummy-client-id
+      SUPABASE_AUTH_EXTERNAL_GOOGLE_SECRET: ci-dummy-secret
+      SUPABASE_AUTH_CAPTCHA_SECRET: ci-dummy-captcha
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: supabase/setup-cli@v3
+        with:
+          version: 3.2.0
+
+      - name: Generate an ephemeral JWT signing key
+        run: |
+          echo '[]' > supabase/signing_keys.json
+          supabase gen signing-key --algorithm ES256 --append
+
+      - name: Start the local stack (database and auth only)
+        run: supabase start -x realtime,storage-api,imgproxy,mailpit,studio,edge-runtime,logflare,vector,supavisor
+
+      - name: Lint database functions
+        run: supabase db lint --level warning --fail-on error
+
+      - name: Run database tests
+        run: supabase test db
+
+      - name: Stop the local stack
+        if: always()
+        run: supabase stop --no-backup
