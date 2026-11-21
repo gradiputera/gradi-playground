@@ -16,8 +16,8 @@ Verification note: the SQL tasks are verified with `supabase test db`. Run it lo
 
 ## 3. Event bus publish (spec: eventing)
 
-- [ ] 3.1 Write `supabase/migrations/20261121000200_eventbus.sql` per design D3: the extensions `pgmq`, `pg_net` and `pgcrypto` (`create extension if not exists`); schema `eventbus`; tables `consumers` and `subscriptions` with the seeded topology; queues `evt_<group>` and `evt_<group>_dlq`; `eventbus.publish(jsonb)`; and the function privilege revokes and grants. Verify: it applies.
-- [ ] 3.2 Write `supabase/tests/002_eventbus_publish.test.sql`, covering: `payment.succeeded.v1` enqueues to `notification` and `reporting` and returns 2; a missing `id` raises and enqueues nothing; an unsubscribed type returns 0; a service role cannot read a queue directly; `anon` and `authenticated` cannot execute `publish`. Verify: `supabase test db` passes.
+- [x] 3.1 Write `supabase/migrations/20261121000200_eventbus.sql` per design D3: the extensions `pgmq`, `pg_net` and `pgcrypto` (`create extension if not exists`); schema `eventbus`; tables `consumers` and `subscriptions` with the seeded topology; queues `evt_<group>` and `evt_<group>_dlq`; `eventbus.publish(jsonb)`; and the function privilege revokes and grants. Verify: it applies.
+- [x] 3.2 Write `supabase/tests/002_eventbus_publish.test.sql`, covering: `payment.succeeded.v1` enqueues to `notification` and `reporting` and returns 2; a missing `id` raises and enqueues nothing; an unsubscribed type returns 0; a service role cannot read a queue directly; `anon` and `authenticated` cannot execute `publish`. Verify: `supabase test db` passes.
 
 ## 4. Dispatcher, signature and operator functions (spec: eventing)
 
