@@ -1,0 +1,45 @@
+asyncapi: 3.0.0
+info:
+  title: gradi-playground events
+  version: 0.1.0
+  description: >
+    Events exchanged between gradi-playground services. Events are delivered at least once
+    by a dispatcher that POSTs signed CloudEvents to each consumer. See ADR 0005.
+defaultContentType: application/cloudevents+json
+
+channels:
+  paymentSucceeded:
+    address: payment.succeeded.v1
+    description: A simulated payment succeeded.
+    messages:
+      paymentSucceeded:
+        payload:
+          $ref: ./payment.succeeded.v1.json
+  paymentFailed:
+    address: payment.failed.v1
+    description: A simulated payment was declined, timed out or had insufficient funds.
+    messages:
+      paymentFailed:
+        payload:
+          $ref: ./payment.failed.v1.json
+  ledgerEntryPosted:
+    address: ledger.entry-posted.v1
+    description: A balanced journal entry was posted to the ledger.
+    messages:
+      ledgerEntryPosted:
+        payload:
+          $ref: ./ledger.entry-posted.v1.json
+
+operations:
+  publishPaymentSucceeded:
+    action: send
+    channel:
+      $ref: '#/channels/paymentSucceeded'
+  publishPaymentFailed:
+    action: send
+    channel:
+      $ref: '#/channels/paymentFailed'
+  publishLedgerEntryPosted:
+    action: send
+    channel:
+      $ref: '#/channels/ledgerEntryPosted'
