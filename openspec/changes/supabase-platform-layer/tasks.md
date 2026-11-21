@@ -7,7 +7,7 @@ Verification note: the SQL tasks are verified with `supabase test db`. Run it lo
 - [x] 1.1 Run `npx -y supabase@3.2.0 init` at the repository root. Keep `supabase/config.toml` and the generated `supabase/.gitignore`, and delete any generated editor or Deno settings that are not needed. Verify: `supabase/config.toml` exists and `[api].schemas` is `["public", "graphql_public"]`.
 - [x] 1.2 Edit `supabase/config.toml` per design D8: auth URLs, anonymous sign-ins, manual linking, refresh token rotation, `signing_keys_path`, email and SMS sign-up disabled, Google via `env()`, captcha disabled with a comment. Verify: the file contains no secret value, and `grep -n "env(" supabase/config.toml` lists both Google variables.
 - [x] 1.3 Add `supabase/.env.example` with `<placeholder>` values for `SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_ID` and `SUPABASE_AUTH_EXTERNAL_GOOGLE_SECRET`. Add `supabase/signing_keys.json` and `supabase/.env` to the root `.gitignore`. Verify: `git check-ignore supabase/signing_keys.json supabase/.env` prints both paths.
-- [ ] 1.4 Add `.github/workflows/supabase.yml` per design D10, with `actions/checkout@v7` and the latest `supabase/setup-cli` major (check its README), pinned to CLI `3.2.0`, an ephemeral signing key generated before start, dummy Google env values, `supabase start` with the unused services excluded, `supabase db lint --fail-on error` and `supabase test db`. Verify: the workflow parses (`npx -y yaml-lint .github/workflows/supabase.yml` or an equivalent YAML parse) and the job runs green on the pull request.
+- [x] 1.4 Add `.github/workflows/supabase.yml` per design D10, with `actions/checkout@v7` and the latest `supabase/setup-cli` major (check its README), pinned to CLI `3.2.0`, an ephemeral signing key generated before start, dummy Google env values, `supabase start` with the unused services excluded, `supabase db lint --fail-on error` and `supabase test db`. Verify: the workflow parses (`npx -y yaml-lint .github/workflows/supabase.yml` or an equivalent YAML parse) and the job runs green on the pull request.
 
 ## 2. Service schemas and roles (spec: platform-database)
 
@@ -55,7 +55,7 @@ Verification note: the SQL tasks are verified with `supabase test db`. Run it lo
 ## 7. Integration checks
 
 - [x] 7.1 Run `npx -y @fission-ai/openspec@latest validate supabase-platform-layer --strict` and `validate --all --strict`. Verify: both pass.
-- [ ] 7.2 Open the pull request (title `feat(supabase): platform layer`) using the PR template. Verify: the `supabase` and `secret-scan` checks are green. If the `supabase` check fails, fix it within this change's tasks and push again.
+- [x] 7.2 Open the pull request (title `feat(supabase): platform layer`) using the PR template. Verify: the `supabase` and `secret-scan` checks are green. If the `supabase` check fails, fix it within this change's tasks and push again.
 
 ## Workflow follow-up
 
