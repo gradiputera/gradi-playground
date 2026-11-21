@@ -54,7 +54,7 @@ Verification note: the SQL tasks are verified with `supabase test db`. Run it lo
 
 ## 7. Integration checks
 
-- [ ] 7.1 Run `npx -y @fission-ai/openspec@latest validate supabase-platform-layer --strict` and `validate --all --strict`. Verify: both pass.
+- [x] 7.1 Run `npx -y @fission-ai/openspec@latest validate supabase-platform-layer --strict` and `validate --all --strict`. Verify: both pass.
 - [ ] 7.2 Open the pull request (title `feat(supabase): platform layer`) using the PR template. Verify: the `supabase` and `secret-scan` checks are green. If the `supabase` check fails, fix it within this change's tasks and push again.
 
 ## Workflow follow-up
