@@ -42,8 +42,8 @@ Verification note: the SQL tasks are verified with `supabase test db`. Run it lo
 
 ## 6. Local seed and documentation
 
-- [ ] 6.1 Write `supabase/seed.sql` per design D9: local consumer endpoints on ports 8081-8085, local Vault secrets `local-dev-only-<group>` and local role passwords `local-dev-only-<svc>`. Verify: `supabase db reset` succeeds locally or in CI, and the gitleaks scan exits 0.
-- [ ] 6.2 Rewrite `supabase/README.md`:
+- [x] 6.1 Write `supabase/seed.sql` per design D9: local consumer endpoints on ports 8081-8085, local Vault secrets `local-dev-only-<group>` and local role passwords `local-dev-only-<svc>`. Verify: `supabase db reset` succeeds locally or in CI, and the gitleaks scan exits 0.
+- [x] 6.2 Rewrite `supabase/README.md`:
   - status: In progress;
   - layout;
   - local quick start: Docker Desktop, `npx -y supabase@3.2.0 start`, signing key generation, `.env` from `.env.example`, `test db`;
