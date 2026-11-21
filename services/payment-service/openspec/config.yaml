@@ -1,32 +1,29 @@
 schema: spec-driven
 
-# Project context (optional)
-# Add only constraints that should guide OpenSpec artifacts and workflows.
-# Include constraints an agent cannot infer by reading the code.
-# Keep general project documentation and discoverable codebase facts out.
-# Example:
-#   context: |
-#     Designs and tasks must cover Windows, macOS, and Linux
-#     Write all artifacts in Spanish
+context: |
+  payment-service: Go. It owns the payment schema (golang-migrate) and provides simulated payments, ledger orchestration and payment events.
+  Boundaries: access only the payment schema; integrate with other services only through HTTP APIs and events (contracts in contracts/).
+  Decisions: ADR 0002 (polyglot services), ADR 0004 (schema isolation), ADR 0005 (events), ADR 0007 (auth), ADR 0009 (telemetry), ADR 0012 (failover).
 
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always state what is out of scope
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+  Guardrails:
+  - Access only your own schema; no cross-schema references or joins; integrate via API or events.
+  - Money is integer minor units with ISO 4217 currency, never floating point.
+  - Never weaken JWT validation (signature via JWKS, iss, aud, exp; reject alg none).
+  - POST /sandbox/reset deletes only the caller's rows.
+  - Outbox rows are written in the same transaction as the business change; consumers are idempotent via inbox.
+  - Keep /health, the site fault-flag 503 behaviour, and deployment.site telemetry.
+  - Idempotency key on every write; context timeouts on all outbound calls; never retry non-idempotent calls.
 
-# Per-operation guidance (optional)
-# Add advisory guidance for how apply and archive work should be conducted.
-# This is separate from artifact rules above.
-# Example:
-#   operations:
-#     apply:
-#       guidance:
-#         - Keep test summaries concise
-#     archive:
-#       guidance:
-#         - Summarize the archive outcome before finishing
+rules:
+  proposal:
+    - State the owning scope (services/payment-service) and list what is out of scope.
+    - Name the idempotency key source for any new write endpoint.
+  specs:
+    - Every requirement uses SHALL or MUST and has at least one scenario.
+    - Every write requirement states its idempotency behaviour.
+  design:
+    - Justify every new dependency here, with its pinned version and license (MIT-compatible).
+    - List each outbound call with its timeout.
+  tasks:
+    - Implement only the tasks listed here; anything else becomes a new proposal.
+    - Every new outbound call includes a context timeout task.
