@@ -1,0 +1,29 @@
+schema: spec-driven
+
+context: |
+  account-service: PHP 8.4 with Laravel. It owns the account schema (Laravel migrations) and provides customer sandbox accounts and balances.
+  Boundaries: access only the account schema; integrate with other services only through HTTP APIs and events (contracts in contracts/).
+  Decisions: ADR 0002 (polyglot services), ADR 0003 (container on Vercel), ADR 0004 (schema isolation), ADR 0007 (auth), ADR 0009 (telemetry), ADR 0011 (sandbox reset).
+
+  Guardrails:
+  - Access only your own schema; no cross-schema references or joins; integrate via API or events.
+  - Money is integer minor units with ISO 4217 currency, never floating point.
+  - Never weaken JWT validation (signature via JWKS, iss, aud, exp; reject alg none).
+  - POST /sandbox/reset deletes only the caller's rows.
+  - Outbox rows are written in the same transaction as the business change; consumers are idempotent via inbox.
+  - Keep /health, the site fault-flag 503 behaviour, and deployment.site telemetry.
+  - No unguarded mass assignment; never commit APP_DEBUG=true; models pinned to the account schema.
+
+rules:
+  proposal:
+    - State the owning scope (services/account-service) and list what is out of scope.
+    - Name the models and their fillable fields in any change that touches them.
+  specs:
+    - Every requirement uses SHALL or MUST and has at least one scenario.
+    - Every write requirement lists the fields it accepts.
+  design:
+    - Justify every new dependency here, with its pinned version and license (MIT-compatible).
+    - Confirm models are pinned to the account schema.
+  tasks:
+    - Implement only the tasks listed here; anything else becomes a new proposal.
+    - Never change APP_DEBUG away from its safe default in committed configuration.

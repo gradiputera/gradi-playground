@@ -1,0 +1,30 @@
+schema: spec-driven
+
+context: |
+  ledger-service: Java 25 with Vert.x 5 (Maven). It owns the ledger schema (Flyway) and provides the double-entry journal, general ledger and trial balance.
+  Boundaries: access only the ledger schema; integrate with other services only through HTTP APIs and events (contracts in contracts/).
+  Decisions: ADR 0006 (ledger design), ADR 0004 (schema isolation), ADR 0007 (auth), ADR 0009 (telemetry), ADR 0011 (sandbox reset).
+
+  Guardrails:
+  - Access only your own schema; no cross-schema references or joins; integrate via API or events.
+  - Money is integer minor units with ISO 4217 currency, never floating point.
+  - Never weaken JWT validation (signature via JWKS, iss, aud, exp; reject alg none).
+  - POST /sandbox/reset deletes only the caller's rows.
+  - Outbox rows are written in the same transaction as the business change; consumers are idempotent via inbox.
+  - Keep /health, the site fault-flag 503 behaviour, and deployment.site telemetry.
+  - Owns journal, general ledger and trial balance endpoints; posting rules come only from the spec; every entry balances (debits equal credits).
+  - Append-only except sandbox reset. Never block the event loop; use executeBlocking or worker verticles.
+
+rules:
+  proposal:
+    - State the owning scope (services/ledger-service) and list what is out of scope.
+    - Posting rules change only through a spec change that references ADR 0006.
+  specs:
+    - Every requirement uses SHALL or MUST and has at least one scenario.
+    - Every journal scenario checks that debits equal credits.
+  design:
+    - Justify every new dependency here, with its pinned version and license (MIT-compatible).
+    - Name the Vert.x threading model used for any database work.
+  tasks:
+    - Implement only the tasks listed here; anything else becomes a new proposal.
+    - Do not change posting rules outside the double-entry-posting spec.

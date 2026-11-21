@@ -1,0 +1,37 @@
+schema: spec-driven
+
+context: |
+  gradi-playground: public portfolio monorepo of polyglot microservices (PHP/Laravel, Java/Vert.x, Go, Node.js/Hono, Python/FastAPI), a Nuxt web app with a BFF, a Supabase Free platform layer and Grafana Cloud Free observability.
+  This root openspec/ holds system-level capabilities and cross-service changes. Service-specific changes live in services/<svc>/openspec/.
+  Decisions are recorded in architecture/adr/ (ADRs 0001-0014). Read the relevant ADR before proposing a change.
+
+  Guardrails:
+  - Never commit secrets, real credentials or personal data; only .env.example with placeholders.
+  - Never read real .env files or print tokens or keys.
+  - Never put JWTs, cookies, email addresses or other PII in logs, metrics or traces; no high-cardinality metric labels such as user_id.
+  - Spec-first: no code without an OpenSpec change; implement only tasks in tasks.md; scope creep becomes a new proposal; architectural changes need an ADR.
+  - No direct commits to main (except the bootstrap), no force-push, no history rewrite.
+  - A service change touches only services/<svc>/ and its own contract file; cross-service work only via root changes.
+  - No breaking OpenAPI or event-schema change without a new version and an ADR.
+  - Never run terraform apply or destroy, supabase db push, remote supabase db reset, vercel --prod, or change cloud dashboards; these are owner actions.
+  - Never edit an applied migration; destructive schema changes only via expand/contract.
+  - Never delete, skip or weaken tests, or disable lint, hooks or CI, without owner approval.
+  - New dependencies are justified in design.md, pinned, and MIT-compatible.
+  - Stay within free-tier quotas (Vercel Hobby, Supabase Free, Grafana Cloud Free, Gmail limits).
+  - Web: no tokens in localStorage; the Supabase service key never reaches the browser; only whitelisted PromQL and LogQL; / stays SSR and /playground/** stays CSR.
+
+rules:
+  proposal:
+    - State the owning scope (root or services/<svc>) and list what is out of scope.
+    - If the change alters an architectural decision, reference the ADR it needs or propose a new ADR.
+    - Proposals contain no code, secrets or personal data.
+  specs:
+    - Every requirement uses SHALL or MUST and has at least one scenario.
+    - Telemetry requirements name masked or excluded fields; never require PII in logs, metrics or traces.
+    - A breaking contract change requires a new version name (for example .v2) and an ADR.
+  design:
+    - Justify every new dependency here, with its pinned version and license (MIT-compatible).
+    - State expected usage against the free-tier quotas.
+  tasks:
+    - Implement only the tasks listed here; anything else becomes a new proposal.
+    - Owner actions (terraform apply, supabase db push, vercel --prod, dashboard changes) are never agent tasks.
