@@ -45,7 +45,7 @@ sequenceDiagram
     B->>W: API request
     W->>R: request with Authorization Bearer token
     R->>S: fetch JWKS (cached)
-    R->>R: verify signature, iss, aud and exp; reject alg none
+    R->>R: verify signature, iss, aud and exp, reject alg none
     R-->>W: response
 ```
 
