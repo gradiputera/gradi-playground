@@ -6,9 +6,12 @@ Security documentation: authentication and authorization model, threat notes and
 
 Planned
 
+## Documents
+
+- [Authentication and authorization model](auth.md): OAuth2 roles, PKCE, `state`, token storage, guest model, resource server validation, threat notes.
+
 ## Responsibilities
 
-- Auth model (OAuth2/OIDC, guest users) and token handling.
 - Threat notes for the public playground.
 - Secret handling: no secrets in the repository; real values live in hosting dashboards and ignored local env files.
 
@@ -16,3 +19,4 @@ Planned
 
 - [SECURITY.md](../../SECURITY.md)
 - [ADR 0007: OAuth2/OIDC with Supabase Auth](../../architecture/adr/0007-oauth2-oidc-with-supabase-auth.md)
+- [Authentication and authorization model](auth.md)
