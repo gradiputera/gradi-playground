@@ -29,6 +29,13 @@ channels:
       ledgerEntryPosted:
         payload:
           $ref: ./ledger.entry-posted.v1.json
+  sandboxNightlyReset:
+    address: platform.sandbox-nightly-reset.v1
+    description: The platform scheduler asks every service to reset its sandbox data.
+    messages:
+      sandboxNightlyReset:
+        payload:
+          $ref: ./platform.sandbox-nightly-reset.v1.json
 
 operations:
   publishPaymentSucceeded:
@@ -43,3 +50,7 @@ operations:
     action: send
     channel:
       $ref: '#/channels/ledgerEntryPosted'
+  publishSandboxNightlyReset:
+    action: send
+    channel:
+      $ref: '#/channels/sandboxNightlyReset'

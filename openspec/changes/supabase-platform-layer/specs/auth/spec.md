@@ -24,7 +24,7 @@ The authorization server SHALL sign access tokens with an asymmetric key and pub
 - **THEN** it receives the public key whose `kid` matches the header of issued access tokens
 
 ### Requirement: Stale guests are removed
-The platform SHALL delete anonymous users whose last sign-in, or creation when they never signed in again, is more than 30 days ago, once per night; non-anonymous users MUST NOT be deleted by this job.
+The platform SHALL delete, once per night, anonymous users whose last activity (the latest of creation, sign-in and session refresh) is more than 30 days ago; non-anonymous users MUST NOT be deleted by this job.
 
 #### Scenario: Nightly guest cleanup
 - **WHEN** the nightly cleanup runs with one guest inactive for 31 days, one guest active yesterday and one Google user inactive for 90 days

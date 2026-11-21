@@ -13,6 +13,7 @@ Planned
 | `payment.succeeded.v1` | payment-service | notification-service, reporting-service | [payment.succeeded.v1.json](payment.succeeded.v1.json) |
 | `payment.failed.v1` | payment-service | notification-service, reporting-service | [payment.failed.v1.json](payment.failed.v1.json) |
 | `ledger.entry-posted.v1` | ledger-service | reporting-service | [ledger.entry-posted.v1.json](ledger.entry-posted.v1.json) |
+| `platform.sandbox-nightly-reset.v1` | platform scheduler (`supabase/`) | all five services | [platform.sandbox-nightly-reset.v1.json](platform.sandbox-nightly-reset.v1.json) |
 
 ## Envelope
 
