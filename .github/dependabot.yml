@@ -38,3 +38,8 @@ updates:
     directory: /services/ledger-service
     schedule:
       interval: weekly
+    ignore:
+      # The build image pins Maven and the JDK together (maven:<version>-eclipse-temurin-25).
+      # Dependabot proposes non-LTS JDK tags (for example temurin-26), which the build rejects
+      # (JDK [25,26) in pom.xml). Bump it by hand, together with the JDK, in its own change.
+      - dependency-name: "maven"
