@@ -89,11 +89,11 @@ Execution rules (read first):
 
 ## 4. Documentation
 
-- [ ] 4.1 Replace `services/payment-service/README.md` with A15 and create `services/payment-service/.env.example` (A14). Verify:
+- [x] 4.1 Replace `services/payment-service/README.md` with A15 and create `services/payment-service/.env.example` (A14). Verify:
   - `git check-ignore -q services/payment-service/.env` exits 0 (ignored);
   - `git check-ignore -q services/payment-service/.env.example` exits 1 (not ignored);
   - every relative link in the README points to an existing file: `.env.example`, `../../contracts/openapi/payment.yaml`, and the six ADR files under `../../architecture/adr/`.
-- [ ] 4.2 Commit group 4: run the secret scan, then `git add services/payment-service/README.md services/payment-service/.env.example services/payment-service/openspec/changes/service-skeleton/tasks.md`, and commit with message `docs(payment-service): configuration, local development and owner setup`. Verify: `git status --porcelain` is empty.
+- [x] 4.2 Commit group 4: run the secret scan, then `git add services/payment-service/README.md services/payment-service/.env.example services/payment-service/openspec/changes/service-skeleton/tasks.md`, and commit with message `docs(payment-service): configuration, local development and owner setup`. Verify: `git status --porcelain` is empty.
 
 ## 5. Integration check and pull request
 
