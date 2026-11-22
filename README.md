@@ -23,7 +23,7 @@ This repository is a **design and specification stage**. It holds decisions (ADR
 | account-service | PHP 8.4 / Laravel | `account` | Laravel migrations | Customer sandbox accounts and balances |
 | ledger-service | Java 25 / Vert.x 5 (Maven) | `ledger` | Flyway | Double-entry journal, general ledger, trial balance |
 | payment-service | Go | `payment` | golang-migrate | Simulate payments, orchestrate posting, emit payment events |
-| notification-service | Node.js 24 / TypeScript + Hono | `notification` | Drizzle Kit | Consume events via webhook, send real email |
+| notification-service | Node.js 24 / TypeScript + Express | `notification` | Drizzle Kit | Consume events via webhook, send real email |
 | reporting-service | Python 3.13 / FastAPI (uv) | `reporting` | Alembic | Read model of cross-service summaries built from events |
 
 The web app `apps/web` (Nuxt) hosts the main page and the playground, and its BFF.
@@ -39,7 +39,7 @@ flowchart TB
         acc["account-service: PHP 8.4 / Laravel"]
         led["ledger-service: Java 25 / Vert.x 5"]
         pay["payment-service: Go"]
-        notif["notification-service: Node.js 24 / Hono"]
+        notif["notification-service: Node.js 24 / Express"]
         rep["reporting-service: Python 3.13 / FastAPI"]
     end
 
@@ -116,7 +116,7 @@ gradi-playground/
 │   ├── account-service/          PHP 8.4 / Laravel
 │   ├── ledger-service/           Java 25 / Vert.x 5
 │   ├── payment-service/          Go
-│   ├── notification-service/     Node.js 24 / Hono
+│   ├── notification-service/     Node.js 24 / Express
 │   └── reporting-service/        Python 3.13 / FastAPI
 ├── supabase/                     Platform layer: auth, schemas and roles, queues, cron
 ├── contracts/
