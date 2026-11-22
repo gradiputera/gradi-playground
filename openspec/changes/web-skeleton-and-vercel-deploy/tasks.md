@@ -30,7 +30,7 @@ Execution rules (read first):
 
 ## 2. Nuxt application (specs: web-routing, web-hosting)
 
-- [ ] 2.1 Create the application files exactly from design.md:
+- [x] 2.1 Create the application files exactly from design.md:
   - `apps/web/app/app.vue` (A7);
   - `apps/web/app/layouts/default.vue` (A8);
   - `apps/web/app/assets/css/main.css` (A9);
@@ -42,8 +42,8 @@ Execution rules (read first):
   - `apps/web/app/error.vue` (A15).
 
   Verify: `pnpm --filter web typecheck` exits 0.
-- [ ] 2.2 Create `apps/web/server/api/health.get.ts` (A16). Verify: `pnpm --filter web build` ends with `Build complete`, its file list includes `.output/server/chunks/routes/api/health.get.mjs`, and `git status --porcelain` afterwards does not list `apps/web/.output`.
-- [ ] 2.3 Commit group 2: run the secret scan, then `git add apps/web/app apps/web/server openspec/changes/web-skeleton-and-vercel-deploy/tasks.md`, and commit with message `feat(web): add SSR main page, CSR playground and health endpoint`. Verify: `git status --porcelain` is empty.
+- [x] 2.2 Create `apps/web/server/api/health.get.ts` (A16). Verify: `pnpm --filter web build` ends with `Build complete`, its file list includes `.output/server/chunks/routes/api/health.get.mjs`, and `git status --porcelain` afterwards does not list `apps/web/.output`.
+- [x] 2.3 Commit group 2: run the secret scan, then `git add apps/web/app apps/web/server openspec/changes/web-skeleton-and-vercel-deploy/tasks.md`, and commit with message `feat(web): add SSR main page, CSR playground and health endpoint`. Verify: `git status --porcelain` is empty.
 
 ## 3. Tests (specs: web-routing, web-hosting)
 
