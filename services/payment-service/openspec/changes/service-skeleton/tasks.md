@@ -74,18 +74,18 @@ Execution rules (read first):
 
 ## 3. CI, contract and Dependabot
 
-- [ ] 3.1 Create `.github/workflows/payment-service.yml` (A16). Replace `contracts/openapi/payment.yaml` with A17. Append A18 to `.github/dependabot.yml`. Verify:
+- [x] 3.1 Create `.github/workflows/payment-service.yml` (A16). Replace `contracts/openapi/payment.yaml` with A17. Append A18 to `.github/dependabot.yml`. Verify:
   - `npx -y yaml-lint@1.7.0 .github/workflows/payment-service.yml contracts/openapi/payment.yaml .github/dependabot.yml` reports every file as valid;
   - `git diff --stat contracts/openapi/payment.yaml` shows `4 insertions(+)` and no deletions;
   - `git diff --stat .github/dependabot.yml` shows `8 insertions(+)` and no deletions;
   - `grep -c "package-ecosystem" .github/dependabot.yml` prints `4`.
-- [ ] 3.2 Check the contract change for breaking changes:
+- [x] 3.2 Check the contract change for breaking changes:
   ```bash
   git show main:contracts/openapi/payment.yaml > "$TEMP/payment-base.yaml"
   GOTOOLCHAIN=go1.27.4 go run github.com/oasdiff/oasdiff@v1.39.0 breaking --fail-on ERR "$TEMP/payment-base.yaml" contracts/openapi/payment.yaml
   ```
   Verify: the command exits 0 and reports no breaking changes.
-- [ ] 3.3 Commit group 3: run the secret scan, then `git add .github/workflows/payment-service.yml contracts/openapi/payment.yaml .github/dependabot.yml services/payment-service/openspec/changes/service-skeleton/tasks.md`, and commit with message `ci(payment-service): build, test and contract checks`. Verify: `git status --porcelain` is empty.
+- [x] 3.3 Commit group 3: run the secret scan, then `git add .github/workflows/payment-service.yml contracts/openapi/payment.yaml .github/dependabot.yml services/payment-service/openspec/changes/service-skeleton/tasks.md`, and commit with message `ci(payment-service): build, test and contract checks`. Verify: `git status --porcelain` is empty.
 
 ## 4. Documentation
 

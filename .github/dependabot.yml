@@ -22,3 +22,11 @@ updates:
       # Remove this rule once vue-tsc supports TypeScript 7.
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
+  - package-ecosystem: gomod
+    directory: /services/payment-service
+    schedule:
+      interval: weekly
+  - package-ecosystem: docker
+    directory: /services/payment-service
+    schedule:
+      interval: weekly
