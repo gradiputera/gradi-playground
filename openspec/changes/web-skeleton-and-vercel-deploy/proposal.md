@@ -43,8 +43,8 @@ Out of scope:
   - `package.json`, `pnpm-workspace.yaml`, `pnpm-lock.yaml` at the repository root;
   - `apps/web/` with the Nuxt app, its tests and `package.json`;
   - `.github/workflows/web.yml`.
-- Changed files: `apps/web/README.md`, `.github/dependabot.yml`, `.gitignore` (only if the Nuxt build output needs entries that are missing), and the project `README.md` roadmap status.
+- Changed files: `apps/web/README.md`, `.github/dependabot.yml`, and the roadmap status in the project `README.md`. `.gitignore` already covers `node_modules/`, `.nuxt/` and `.output/`.
 - New dependencies, all pinned and MIT or Apache-2.0: Nuxt and its Vue runtime, plus the development tools Vitest, `@nuxt/test-utils`, `vue-tsc` and TypeScript. Each one is justified in `design.md`.
-- The local Node.js must be 24.15 or newer, because Nuxt 4.6 requires it.
+- Runtime: Node.js 26 LTS everywhere (local through nvm, CI, and Vercel, where it is generally available and the default). pnpm 12.21.0 is installed separately, because Node 26 no longer bundles Corepack.
 - No ADR change is needed: the change implements ADR 0003 (Nuxt deploys natively on Vercel) and ADR 0008 (route rendering) as written.
 - Owner actions are required to go live: create the Vercel project and connect the repository. After the first production deploy, update the Supabase URL configuration, the Google JavaScript origin and the Turnstile hostname.

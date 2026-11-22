@@ -6,7 +6,7 @@
 The system SHALL answer an unknown path outside `/playground` with HTTP 404 and a not-found page that links to `/`. An unknown path under `/playground` SHALL render the same not-found page in the browser.
 
 #### Scenario: Unknown server-rendered path
-- **WHEN** a visitor requests `/does-not-exist`
+- **WHEN** a browser requests `/does-not-exist`
 - **THEN** the response is HTTP 404 and the page links to `/`
 
 #### Scenario: Unknown playground path
