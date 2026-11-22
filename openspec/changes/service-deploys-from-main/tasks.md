@@ -33,11 +33,11 @@ Execution rules (read first):
 
 ## 2. Documentation
 
-- [ ] 2.1 Apply A2 to `architecture/adr/0003-service-per-vercel-project-as-containers.md` and A3 to `README.md`. Verify:
+- [x] 2.1 Apply A2 to `architecture/adr/0003-service-per-vercel-project-as-containers.md` and A3 to `README.md`. Verify:
   - `git diff --stat` lists `architecture/adr/0003-service-per-vercel-project-as-containers.md` with `2 insertions(+)` and no deletions, and `README.md` with `1 insertion(+), 1 deletion(-)`;
   - `grep -c "Amended: 2026-11-22" architecture/adr/0003-service-per-vercel-project-as-containers.md` prints `1`;
   - `grep -c "Service projects deploy from \`main\` only" README.md` prints `1`.
-- [ ] 2.2 Commit group 2: `git add architecture/adr/0003-service-per-vercel-project-as-containers.md README.md openspec/changes/service-deploys-from-main/tasks.md`, run the secret scan, and commit with message `docs: record that service projects deploy from main only`. Verify: `git status --porcelain` is empty.
+- [x] 2.2 Commit group 2: `git add architecture/adr/0003-service-per-vercel-project-as-containers.md README.md openspec/changes/service-deploys-from-main/tasks.md`, run the secret scan, and commit with message `docs: record that service projects deploy from main only`. Verify: `git status --porcelain` is empty.
 
 ## 3. Checks and pull request
 

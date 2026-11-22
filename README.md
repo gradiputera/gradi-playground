@@ -164,7 +164,7 @@ Items are delivered one OpenSpec change at a time.
 
 ## Hosting and free tiers
 
-- **Vercel Hobby**: one project per service using the Container runtime (beta), and the Nuxt app natively. Fallback host: Render free web service.
+- **Vercel Hobby**: one project per service using the Container runtime (beta), and the Nuxt app natively. Service projects deploy from `main` only; the Nuxt app also gets a preview per pull request. Fallback host: Render free web service.
 - **Supabase Free**: one active project holds all schemas (a second project is reserved for staging).
 - **Grafana Cloud Free**: 10k active series, 50 GB logs, 50 GB traces, 14-day retention.
 - **Gmail SMTP**: capped well below the daily sending limit (100 emails per day globally).
