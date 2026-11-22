@@ -99,7 +99,7 @@ Execution rules (read first):
 
 ## 6. Integration check and pull request
 
-- [ ] 6.1 Run the full check from a clean state:
+- [x] 6.1 Run the full check from a clean state:
   ```bash
   cd services/notification-service && rm -rf node_modules && npm ci --no-audit --no-fund && npm run typecheck && npm test && npx -y @fission-ai/openspec@latest validate --all --strict && cd ../.. && npx -y @fission-ai/openspec@latest validate --all --strict
   ```
@@ -112,7 +112,7 @@ Execution rules (read first):
   - the gitleaks scan prints `no leaks found`;
   - `git status --porcelain` is empty;
   - `git ls-files | grep -E "(^|/)(\.env|node_modules|vendor|\.nuxt|\.output|target)(/|$)"` prints nothing.
-- [ ] 6.2 Mark this task `- [x]`, `git add` `services/notification-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `docs(openspec): complete notification-service service-skeleton tasks`. Then run `git push -u origin feat/notification-service-skeleton`. Open the pull request with `gh pr create --base main --head feat/notification-service-skeleton --title "feat(notification-service): Express service skeleton" --body-file <file>`. Write the body file in the scratchpad or system temp directory, not in the repository. The body has:
+- [x] 6.2 Mark this task `- [x]`, `git add` `services/notification-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `docs(openspec): complete notification-service service-skeleton tasks`. Then run `git push -u origin feat/notification-service-skeleton`. Open the pull request with `gh pr create --base main --head feat/notification-service-skeleton --title "feat(notification-service): Express service skeleton" --body-file <file>`. Write the body file in the scratchpad or system temp directory, not in the repository. The body has:
   - `## Summary`: bullets for:
     - the Express 5 app (TypeScript run directly by Node 24);
     - JWT validation with jose and JWKS;
