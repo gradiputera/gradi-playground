@@ -64,7 +64,7 @@ Execution rules (read first):
 
 ## 2. Container and Vercel configuration
 
-- [ ] 2.1 Create these files from the Appendix:
+- [x] 2.1 Create these files from the Appendix:
   - `services/reporting-service/Dockerfile` (A18);
   - `services/reporting-service/.dockerignore` (A19);
   - `services/reporting-service/vercel.json` (A20).
@@ -72,7 +72,8 @@ Execution rules (read first):
   Verify:
   - `node -e "JSON.parse(require('fs').readFileSync('services/reporting-service/vercel.json','utf8'))"` exits 0;
   - if `docker info` succeeds, `docker build -t reporting-service:local services/reporting-service` exits 0. If `docker info` fails, add a sub-bullet under this task: "local image build not run (Docker unavailable); CI is authoritative".
-- [ ] 2.2 Commit group 2: `git add services/reporting-service/Dockerfile services/reporting-service/.dockerignore services/reporting-service/vercel.json services/reporting-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `build(reporting-service): container image and Vercel config`. Verify: `git status --porcelain` is empty.
+  - local image build not run (Docker unavailable); CI is authoritative
+- [x] 2.2 Commit group 2: `git add services/reporting-service/Dockerfile services/reporting-service/.dockerignore services/reporting-service/vercel.json services/reporting-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `build(reporting-service): container image and Vercel config`. Verify: `git status --porcelain` is empty.
 
 ## 3. CI, contract and Dependabot
 
