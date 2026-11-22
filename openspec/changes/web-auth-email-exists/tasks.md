@@ -44,11 +44,11 @@ Execution rules (read first):
 
 ## 2. Documentation
 
-- [ ] 2.1 Apply A3 to `docs/security/auth.md`. Verify:
+- [x] 2.1 Apply A3 to `docs/security/auth.md`. Verify:
   - `grep -c "email_exists" docs/security/auth.md` prints `1`;
   - `grep -c "^## " docs/security/auth.md` prints `15`;
   - `git diff --stat docs/security/auth.md` shows `1 insertion(+), 1 deletion(-)`.
-- [ ] 2.2 Commit group 2: run the secret scan, then `git add docs/security/auth.md openspec/changes/web-auth-email-exists/tasks.md`, and commit with message `docs(security): handle email_exists when a guest links Google`. Verify: `git status --porcelain` is empty.
+- [x] 2.2 Commit group 2: run the secret scan, then `git add docs/security/auth.md openspec/changes/web-auth-email-exists/tasks.md`, and commit with message `docs(security): handle email_exists when a guest links Google`. Verify: `git status --porcelain` is empty.
 
 ## 3. Integration check and pull request
 

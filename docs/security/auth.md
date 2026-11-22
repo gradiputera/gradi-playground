@@ -97,7 +97,7 @@ The flows above are implemented in `apps/web`; its README lists the endpoints.
 - `state` lives in the `gp-oauth-state` cookie (path `/auth`, 10 minutes, single use) and travels inside the callback URL. Supabase Auth accepts any callback on the Site URL's host, so `?state=` needs no extra redirect allow-list entry.
 - `POST` endpoints accept only requests whose `Origin` equals the site's own origin; `SameSite=Lax` is the second layer.
 - The session endpoint asks Supabase Auth (`getUser`) instead of trusting the cookie, so a revoked session reads as signed out and an expired access token is refreshed on the way.
-- A returning visitor on a new guest session cannot link a Google account that already belongs to their old user (`identity_already_exists`). The BFF ends the guest session and signs them in to the existing account; the new guest's sandbox data is dropped.
+- A returning visitor on a new guest session cannot link a Google account whose identity or email address already belongs to their old user (`identity_already_exists` or `email_exists`). The BFF ends the guest session and signs them in to the existing account; the new guest's sandbox data is dropped. Without a guest session, the BFF does not restart sign-in and reports `auth_error=provider`.
 - The browser learns only `guest` or `google` and a display name: no tokens, email address or user id.
 
 ## Related
