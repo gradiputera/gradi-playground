@@ -64,7 +64,7 @@ Execution rules (read first):
 
 ## 2. Container and Vercel configuration
 
-- [ ] 2.1 Create these files from the Appendix:
+- [x] 2.1 Create these files from the Appendix:
   - `services/ledger-service/Dockerfile` (A15);
   - `services/ledger-service/.dockerignore` (A16);
   - `services/ledger-service/vercel.json` (A17).
@@ -72,7 +72,7 @@ Execution rules (read first):
   Verify:
   - `node -e "JSON.parse(require('fs').readFileSync('services/ledger-service/vercel.json','utf8'))"` exits 0;
   - if `docker info` succeeds, `docker build -t ledger-service:local services/ledger-service` exits 0. If `docker info` fails, write down "local image build not run (Docker unavailable); CI is authoritative" for the PR.
-- [ ] 2.2 Commit group 2: run the secret scan, then `git add services/ledger-service/Dockerfile services/ledger-service/.dockerignore services/ledger-service/vercel.json services/ledger-service/openspec/changes/service-skeleton/tasks.md`, and commit with message `build(ledger-service): container image and Vercel config`. Verify: `git status --porcelain` is empty.
+- [x] 2.2 Commit group 2: run the secret scan, then `git add services/ledger-service/Dockerfile services/ledger-service/.dockerignore services/ledger-service/vercel.json services/ledger-service/openspec/changes/service-skeleton/tasks.md`, and commit with message `build(ledger-service): container image and Vercel config`. Verify: `git status --porcelain` is empty.
 
 ## 3. CI, contract and Dependabot
 
