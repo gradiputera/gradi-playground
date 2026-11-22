@@ -59,3 +59,11 @@ updates:
     directory: /services/notification-service
     schedule:
       interval: weekly
+  - package-ecosystem: uv
+    directory: /services/reporting-service
+    schedule:
+      interval: weekly
+  - package-ecosystem: docker
+    directory: /services/reporting-service
+    schedule:
+      interval: weekly

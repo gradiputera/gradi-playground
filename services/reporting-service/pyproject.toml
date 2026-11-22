@@ -1,0 +1,46 @@
+[project]
+name = "reporting-service"
+version = "0.1.0"
+description = "Read model of cross-service summaries built from events, for gradi-playground."
+license = "MIT"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+  "alembic==1.20.1",
+  "fastapi==0.165.0",
+  "pg8000==1.31.6",
+  "pyjwt[crypto]==2.15.1",
+  "sqlalchemy==2.1.9",
+  "uvicorn==0.54.0",
+]
+
+[dependency-groups]
+dev = [
+  "httpx2==2.16.2",
+  "mypy==2.4.1",
+  "pytest==9.2.0",
+  "ruff==0.17.6",
+]
+
+[tool.uv]
+# An application, not a library: uv installs the dependencies only, and the code runs from this folder.
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 110
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "UP", "S", "N", "SIM", "RUF"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S105", "S106"]
+
+[tool.mypy]
+strict = true
+python_version = "3.13"
+files = ["reporting_service", "migrations", "tests"]
