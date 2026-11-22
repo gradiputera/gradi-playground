@@ -22,13 +22,13 @@ Execution rules (read first):
 
 ## 1. Express app and service code (specs: service-baseline, event-notifications)
 
-- [ ] 1.1 Check the tools and the branch:
+- [x] 1.1 Check the tools and the branch:
   - `git branch --show-current` must print `feat/notification-service-skeleton`;
   - `node --version` must print a version of `v24.11.0` or newer (for example `v26.13.1`);
   - `npm --version` must print a version of `10` or newer.
 
   Verify: all three outputs match.
-- [ ] 1.2 Create these files from the Appendix. `N` stands for `services/notification-service`:
+- [x] 1.2 Create these files from the Appendix. `N` stands for `services/notification-service`:
   - `N/package.json` (A1), `N/tsconfig.json` (A2), `N/drizzle.config.ts` (A3);
   - `N/src/main.ts` (A4), `N/src/log.ts` (A5), `N/src/auth/verifier.ts` (A6), `N/src/webhooks/signature.ts` (A7), `N/src/http/app.ts` (A8);
   - `N/src/db/schema.ts` (A9), `N/src/db/migrate.ts` (A10);
@@ -38,7 +38,7 @@ Execution rules (read first):
   Then copy the lockfile: `cp services/notification-service/openspec/changes/service-skeleton/assets/package-lock.json services/notification-service/package-lock.json`.
 
   Verify: `find services/notification-service -type f -not -path "*/openspec/*" -not -path "*/node_modules/*" | wc -l` prints `19` (17 Appendix files, `package-lock.json`, and the existing `README.md`).
-- [ ] 1.3 Install, typecheck and test:
+- [x] 1.3 Install, typecheck and test:
   ```bash
   cd services/notification-service && npm ci --no-audit --no-fund && npm run typecheck && npm test
   ```
@@ -46,7 +46,7 @@ Execution rules (read first):
   - every command exits 0;
   - `diff services/notification-service/package-lock.json services/notification-service/openspec/changes/service-skeleton/assets/package-lock.json` prints nothing (the lockfile is unchanged);
   - the test summary contains `ℹ tests 14`, `ℹ pass 14` and `ℹ fail 0`. The integration suite is listed as skipped (`integration environment not set`), which is expected locally.
-- [ ] 1.4 Confirm that every outbound call has a timeout. Each command must print `1`:
+- [x] 1.4 Confirm that every outbound call has a timeout. Each command must print `1`:
   - `grep -c "timeoutDuration: 5_000" services/notification-service/src/auth/verifier.ts`;
   - `grep -c "connect_timeout: 10" services/notification-service/src/db/migrate.ts`;
   - `grep -c "statement_timeout: 30_000" services/notification-service/src/db/migrate.ts`;
