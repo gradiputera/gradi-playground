@@ -24,14 +24,14 @@ Execution rules (read first):
 
 ## 1. Maven project and service code (specs: service-baseline, double-entry-posting)
 
-- [ ] 1.1 Check the tools and the branch:
+- [x] 1.1 Check the tools and the branch:
   - `git branch --show-current` must print `feat/ledger-service-skeleton`;
   - `<JAVA> "$JAVA_HOME/bin/java" -version 2>&1 | head -1` must print a line starting with `java version "25.`;
   - `<JAVA> "$MVN" -v 2>&1 | grep "Apache Maven"` must print a line starting with `Apache Maven 3.9.6`;
   - `node --version` must start with `v26.`.
 
   Verify: all four outputs match.
-- [ ] 1.2 Create these files from the Appendix. `J` stands for `services/ledger-service/src/main/java/io/github/gradiputera/ledger` and `T` for `services/ledger-service/src/test/java/io/github/gradiputera/ledger`:
+- [x] 1.2 Create these files from the Appendix. `J` stands for `services/ledger-service/src/main/java/io/github/gradiputera/ledger` and `T` for `services/ledger-service/src/test/java/io/github/gradiputera/ledger`:
   - `services/ledger-service/pom.xml` (A1);
   - `J/Main.java` (A2), `J/JsonLogFormatter.java` (A3);
   - `J/auth/Identity.java` (A4), `J/auth/TokenVerifier.java` (A5), `J/auth/JwksLoader.java` (A6);
@@ -41,24 +41,24 @@ Execution rules (read first):
   - `T/auth/TokenVerifierTest.java` (A11), `T/db/DatabaseUrlTest.java` (A12), `T/http/HttpApiTest.java` (A13), `T/integration/LocalStackTest.java` (A14).
 
   Verify: `find services/ledger-service/src -type f | wc -l` prints `13`.
-- [ ] 1.3 Build and test:
+- [x] 1.3 Build and test:
   ```bash
   cd services/ledger-service && <JAVA> "$MVN" -B package 2>&1 | grep -E "Tests run: 18|BUILD"
   ```
   Verify:
   - the output contains `Tests run: 18, Failures: 0, Errors: 0, Skipped: 6` and `BUILD SUCCESS`. The 6 skipped tests are the integration tests, which skip themselves without their environment;
   - `services/ledger-service/target/ledger-service.jar` exists.
-- [ ] 1.4 Check that the jar refuses to start without configuration:
+- [x] 1.4 Check that the jar refuses to start without configuration:
   ```bash
   cd services/ledger-service && <JAVA> "$JAVA_HOME/bin/java" -jar target/ledger-service.jar; echo "exit=$?"
   ```
   Verify: it prints one JSON line whose `msg` is `ledger-service stopped: DATABASE_URL and SUPABASE_URL must be set`, then `exit=1`.
-- [ ] 1.5 Confirm that every outbound call has a timeout. Each command must print the number shown:
+- [x] 1.5 Confirm that every outbound call has a timeout. Each command must print the number shown:
   - `grep -c "FETCH_TIMEOUT_MS = 5_000" services/ledger-service/src/main/java/io/github/gradiputera/ledger/auth/JwksLoader.java` prints `1`;
   - `grep -c '"connectTimeout", "10"' services/ledger-service/src/main/java/io/github/gradiputera/ledger/db/Migrations.java` prints `1`;
   - `grep -c "statement_timeout=30000" services/ledger-service/src/main/java/io/github/gradiputera/ledger/db/Migrations.java` prints `1`;
   - `grep -c "Duration.ofSeconds(10)" services/ledger-service/src/test/java/io/github/gradiputera/ledger/integration/LocalStackTest.java` prints `2`.
-- [ ] 1.6 Commit group 1: run the secret scan, then `git add services/ledger-service/pom.xml services/ledger-service/src services/ledger-service/openspec/changes/service-skeleton/tasks.md`, and commit with message `feat(ledger-service): Vert.x skeleton with JWT validation and ledger migrations`. Verify:
+- [x] 1.6 Commit group 1: run the secret scan, then `git add services/ledger-service/pom.xml services/ledger-service/src services/ledger-service/openspec/changes/service-skeleton/tasks.md`, and commit with message `feat(ledger-service): Vert.x skeleton with JWT validation and ledger migrations`. Verify:
   - `git status --porcelain` is empty;
   - `git ls-files services/ledger-service | grep -c "^services/ledger-service/target/"` prints `0`.
 
