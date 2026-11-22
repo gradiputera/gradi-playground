@@ -52,7 +52,7 @@ Execution rules (read first):
 
 ## 3. Integration check and pull request
 
-- [ ] 3.1 Run the full check from a clean state:
+- [x] 3.1 Run the full check from a clean state:
   ```bash
   rm -rf apps/web/.nuxt apps/web/.output
   pnpm install --frozen-lockfile
@@ -65,7 +65,7 @@ Execution rules (read first):
   - every command exits 0, and the routing tests print `Tests  11 passed (11)`;
   - `validate` may print an `[INFO]` line saying archive would refuse the `web-auth-email-exists` delta. That is expected (see `design.md`, Risks) and is not a failure;
   - `git ls-files | grep -E "(^|/)(\.env|node_modules|\.nuxt|\.output)(/|$)"` prints nothing.
-- [ ] 3.2 Mark this task `- [x]`, commit `openspec/changes/web-auth-email-exists/tasks.md` with message `docs(openspec): complete web-auth-email-exists tasks` (after the secret scan), then run `git push -u origin feat/web-auth-email-exists`. Open the pull request with `gh pr create --base main --head feat/web-auth-email-exists --title "fix(web): sign in to the existing account when the Google email is already registered" --body-file <file>`. Write the body file in the scratchpad or system temp directory, not in the repository. The body has:
+- [x] 3.2 Mark this task `- [x]`, commit `openspec/changes/web-auth-email-exists/tasks.md` with message `docs(openspec): complete web-auth-email-exists tasks` (after the secret scan), then run `git push -u origin feat/web-auth-email-exists`. Open the pull request with `gh pr create --base main --head feat/web-auth-email-exists --title "fix(web): sign in to the existing account when the Google email is already registered" --body-file <file>`. Write the body file in the scratchpad or system temp directory, not in the repository. The body has:
   - `## Summary`: bullets for the callback change (both error codes, guest-only restart), the two new tests and the docs line;
   - `## Decisions`: a link to ADR 0007 and the OpenSpec change folder;
   - `## Checks`: typecheck, the routing tests, the local auth test result from task 1.4 (`27 passed`, or "not run"), build, `openspec validate --all --strict`, and the gitleaks result;
