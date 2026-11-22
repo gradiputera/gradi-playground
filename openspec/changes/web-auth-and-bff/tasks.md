@@ -86,11 +86,11 @@ Execution rules (read first):
   - `git check-ignore -q apps/web/.env.example` exits 1 (not ignored);
   - `grep -c "^## " docs/security/auth.md` prints `15`;
   - every relative link in both Markdown files points to an existing file.
-- [ ] 5.2 Commit group 5: run the secret scan, then `git add apps/web/.env.example apps/web/README.md docs/security/auth.md openspec/changes/web-auth-and-bff/tasks.md`, and commit with message `docs(web): auth endpoints, environment and owner setup`. Verify: `git status --porcelain` is empty.
+- [x] 5.2 Commit group 5: run the secret scan, then `git add apps/web/.env.example apps/web/README.md docs/security/auth.md openspec/changes/web-auth-and-bff/tasks.md`, and commit with message `docs(web): auth endpoints, environment and owner setup`. Verify: `git status --porcelain` is empty.
 
 ## 6. Integration check and pull request
 
-- [ ] 6.1 Run the full check from a clean state:
+- [x] 6.1 Run the full check from a clean state:
   ```bash
   rm -rf apps/web/.nuxt apps/web/.output
   pnpm install --frozen-lockfile
@@ -100,7 +100,7 @@ Execution rules (read first):
   npx -y @fission-ai/openspec@latest validate --all --strict
   ```
   Then run the secret scan. Verify: every command exits 0, and `git ls-files | grep -E "(^|/)(\.env|node_modules|\.nuxt|\.output)(/|$)"` prints nothing. `apps/web/.env.example` does not match this pattern.
-- [ ] 6.2 Mark this task `- [x]`, commit `openspec/changes/web-auth-and-bff/tasks.md` with message `docs(openspec): complete web-auth-and-bff tasks` (after the secret scan), then run `git push -u origin feat/web-auth-and-bff`. Open the pull request with `gh pr create --base main --head feat/web-auth-and-bff --title "feat(web): guest and Google sign-in through the BFF" --body-file <file>`. Write the body file in the scratchpad or system temp directory, not in the repository. The body has:
+- [x] 6.2 Mark this task `- [x]`, commit `openspec/changes/web-auth-and-bff/tasks.md` with message `docs(openspec): complete web-auth-and-bff tasks` (after the secret scan), then run `git push -u origin feat/web-auth-and-bff`. Open the pull request with `gh pr create --base main --head feat/web-auth-and-bff --title "feat(web): guest and Google sign-in through the BFF" --body-file <file>`. Write the body file in the scratchpad or system temp directory, not in the repository. The body has:
   - `## Summary`: bullets for the server-only Supabase client, the five auth endpoints, the cross-site and caching rules, the playground shell and identity header, the auth tests, the CI change and the docs;
   - `## Decisions`: a link to ADR 0007 and the OpenSpec change folder;
   - `## Checks`: typecheck, the routing tests, the local auth test result from task 4.2 (`25 passed`, or "not run"), build, `openspec validate --all --strict`, and the gitleaks result;
