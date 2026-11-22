@@ -1,0 +1,124 @@
+name: reporting-service
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "services/reporting-service/**"
+      - "contracts/openapi/reporting.yaml"
+      - "supabase/config.toml"
+      - "supabase/migrations/**"
+      - "supabase/seed.sql"
+      - ".github/workflows/reporting-service.yml"
+  pull_request:
+    paths:
+      - "services/reporting-service/**"
+      - "contracts/openapi/reporting.yaml"
+      - "supabase/config.toml"
+      - "supabase/migrations/**"
+      - "supabase/seed.sql"
+      - ".github/workflows/reporting-service.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  reporting-service:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: services/reporting-service
+    env:
+      # Dummy values so env() references in supabase/config.toml resolve. Not real credentials.
+      SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_ID: ci-dummy-client-id
+      SUPABASE_AUTH_EXTERNAL_GOOGLE_SECRET: ci-dummy-secret
+      SUPABASE_AUTH_CAPTCHA_SECRET: ci-dummy-captcha
+      # Local-only role password from supabase/seed.sql. Not a real credential.
+      LOCAL_DATABASE_URL: postgres://reporting_service:local-dev-only-reporting@127.0.0.1:54322/postgres
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: astral-sh/setup-uv@v10.3.3
+        with:
+          version: "0.13.9"
+          python-version: "3.13"
+          enable-cache: true
+          cache-dependency-glob: services/reporting-service/uv.lock
+
+      - run: uv sync --locked
+
+      - name: Lint and format check
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
+
+      - name: Type check
+        run: uv run mypy
+
+      - name: Validate service specs
+        run: npx -y @fission-ai/openspec@latest validate --all --strict
+
+      - name: Check the API contract for breaking changes
+        if: github.event_name == 'pull_request'
+        working-directory: .
+        run: |
+          git show "origin/${{ github.base_ref }}:contracts/openapi/reporting.yaml" > "$RUNNER_TEMP/reporting-base.yaml"
+          cp contracts/openapi/reporting.yaml "$RUNNER_TEMP/reporting-revision.yaml"
+          docker run --rm -v "$RUNNER_TEMP:/specs:ro" tufin/oasdiff:v1.39.0 \
+            breaking --fail-on ERR /specs/reporting-base.yaml /specs/reporting-revision.yaml
+
+      - uses: supabase/setup-cli@v3
+        with:
+          version: 3.2.0
+
+      - name: Generate an ephemeral JWT signing key
+        working-directory: .
+        run: |
+          echo '[]' > supabase/signing_keys.json
+          supabase gen signing-key --algorithm ES256 --append
+
+      # Database, auth and gateway only.
+      - name: Start the local Supabase stack
+        working-directory: .
+        run: supabase start -x realtime,storage-api,imgproxy,mailpit,studio,edge-runtime,logflare,vector,supavisor
+
+      # Unit and HTTP tests, plus the integration tests against the local stack. The summary must
+      # count all 19 tests as passed, so the integration tests cannot pass by being skipped.
+      - name: Tests
+        run: |
+          eval "$(supabase status -o env)"
+          REPORTING_TEST_DATABASE_URL="$LOCAL_DATABASE_URL" \
+          REPORTING_TEST_SUPABASE_URL="$API_URL" \
+          REPORTING_TEST_SUPABASE_KEY="$PUBLISHABLE_KEY" \
+            uv run pytest 2>&1 | tee "$RUNNER_TEMP/reporting-tests.txt"
+          grep -Eq "^=+ 19 passed in [0-9.]+s =+$" "$RUNNER_TEMP/reporting-tests.txt"
+
+      - name: Build the container image
+        run: docker build -t reporting-service:ci .
+
+      - name: Smoke test the container
+        run: |
+          eval "$(supabase status -o env)"
+          # The local dispatcher secret from supabase/seed.sql (not a real credential).
+          webhook_secret="whsec_$(printf '%s' 'local-dev-only-reporting' | base64)"
+          docker run -d --name reporting-service --network host \
+            -e PORT=8085 -e DATABASE_URL="$LOCAL_DATABASE_URL" -e SUPABASE_URL="$API_URL" \
+            -e WEBHOOK_SECRET="$webhook_secret" \
+            reporting-service:ci
+          for i in $(seq 1 60); do
+            curl -fsS http://127.0.0.1:8085/health && break
+            sleep 1
+          done
+          test "$(curl -s http://127.0.0.1:8085/health)" = '{"status":"ok"}'
+          test "$(curl -s -o /dev/null -w '%{http_code}' -X POST http://127.0.0.1:8085/sandbox/reset)" = 401
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8085/reports/payments-per-day)" = 401
+          test "$(curl -s -o /dev/null -w '%{http_code}' -X POST -d '{}' http://127.0.0.1:8085/events)" = 401
+          docker logs reporting-service
+
+      - name: Stop the local Supabase stack
+        if: always()
+        working-directory: .
+        run: supabase stop --no-backup
