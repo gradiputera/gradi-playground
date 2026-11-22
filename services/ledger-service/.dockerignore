@@ -1,0 +1,9 @@
+.env
+.env.*
+target/
+src/test/
+openspec/
+README.md
+Dockerfile
+.dockerignore
+vercel.json
