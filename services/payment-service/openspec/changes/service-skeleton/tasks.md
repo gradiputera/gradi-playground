@@ -97,7 +97,7 @@ Execution rules (read first):
 
 ## 5. Integration check and pull request
 
-- [ ] 5.1 Run the full check from a clean state:
+- [x] 5.1 Run the full check from a clean state:
   ```bash
   cd services/payment-service && GOTOOLCHAIN=go1.27.4 go clean -testcache && gofmt -l . && GOTOOLCHAIN=go1.27.4 go vet ./... && GOTOOLCHAIN=go1.27.4 go test ./... && GOTOOLCHAIN=go1.27.4 go build ./... && npx -y @fission-ai/openspec@latest validate --all --strict && cd ../.. && npx -y @fission-ai/openspec@latest validate --all --strict
   ```
@@ -105,7 +105,7 @@ Execution rules (read first):
   - every command exits 0, and `gofmt -l .` prints nothing;
   - `git ls-files | grep -E "(^|/)(\.env|node_modules|\.nuxt|\.output)(/|$)"` prints nothing;
   - `git ls-files services/payment-service | grep -E "\.(exe|test)$"` prints nothing.
-- [ ] 5.2 Mark this task `- [x]`, commit `services/payment-service/openspec/changes/service-skeleton/tasks.md` with message `docs(openspec): complete payment-service service-skeleton tasks` (after the secret scan), then run `git push -u origin feat/payment-service-skeleton`. Open the pull request with `gh pr create --base main --head feat/payment-service-skeleton --title "feat(payment-service): Go service skeleton" --body-file <file>`. Write the body file in the scratchpad or system temp directory, not in the repository. The body has:
+- [x] 5.2 Mark this task `- [x]`, commit `services/payment-service/openspec/changes/service-skeleton/tasks.md` with message `docs(openspec): complete payment-service service-skeleton tasks` (after the secret scan), then run `git push -u origin feat/payment-service-skeleton`. Open the pull request with `gh pr create --base main --head feat/payment-service-skeleton --title "feat(payment-service): Go service skeleton" --body-file <file>`. Write the body file in the scratchpad or system temp directory, not in the repository. The body has:
   - `## Summary`: bullets for the Go module and HTTP server, JWT validation through JWKS, startup migrations and the `payments` table, the planned endpoints answering 501, the container image and `vercel.json`, the CI workflow, the contract change and Dependabot, and the docs;
   - `## Decisions`: links to ADR 0003, ADR 0004 and ADR 0007, and the OpenSpec change folder `services/payment-service/openspec/changes/service-skeleton/`;
   - `## Checks`: gofmt, vet, unit tests, the local image build result from task 2.1 (built, or "not run"), the oasdiff result, `openspec validate` (service and root), and the gitleaks result;
