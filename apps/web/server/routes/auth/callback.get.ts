@@ -1,14 +1,23 @@
 // OAuth callback: checks state, then exchanges the code and the PKCE verifier for a session.
+
+// Errors Supabase Auth returns when linking Google to a guest finds an existing account: the Google
+// identity (identity_already_exists) or its email address (email_exists) belongs to another user.
+const EXISTING_ACCOUNT_CODES = new Set(['identity_already_exists', 'email_exists'])
+
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)
   if (!consumeOAuthState(event, query.state)) {
     return sendRedirect(event, '/playground?auth_error=state', 302)
   }
 
-  if (query.error_code === 'identity_already_exists') {
-    // The Google account already belongs to another user (a returning visitor on a new guest
-    // session). End the guest session and sign in to the existing account instead.
+  if (typeof query.error_code === 'string' && EXISTING_ACCOUNT_CODES.has(query.error_code)) {
+    // A returning visitor on a new guest session. End the guest session and sign in to the existing
+    // account instead. Without a guest session there was no link attempt, and restarting could loop.
     const supabase = useServerSupabase(event)
+    const { data } = await supabase.auth.getUser()
+    if (data.user?.is_anonymous !== true) {
+      return sendRedirect(event, '/playground?auth_error=provider', 302)
+    }
     const { error } = await supabase.auth.signOut({ scope: 'local' })
     return sendRedirect(event, error ? '/playground?auth_error=provider' : '/auth/google', 302)
   }

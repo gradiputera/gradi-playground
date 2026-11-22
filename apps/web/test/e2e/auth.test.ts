@@ -182,6 +182,30 @@ describe('auth: callback', () => {
     expect(response.headers.get('location')).toBe('/auth/google')
     expect(sessionCookieNames(jar)).toEqual([])
   })
+
+  it('ends the guest session and restarts sign-in when the Google email is already registered', async () => {
+    const jar = await newGuest()
+    await request('/auth/google', jar)
+    const state = jar.get('gp-oauth-state') ?? ''
+    const response = await request(
+      `/auth/callback?error=invalid_request&error_code=email_exists&state=${state}`,
+      jar,
+    )
+    expect(response.headers.get('location')).toBe('/auth/google')
+    expect(sessionCookieNames(jar)).toEqual([])
+  })
+
+  it('reports an existing-account error without a guest session instead of restarting sign-in', async () => {
+    const jar: CookieJar = new Map()
+    await request('/auth/google', jar)
+    const state = jar.get('gp-oauth-state') ?? ''
+    const response = await request(
+      `/auth/callback?error=invalid_request&error_code=email_exists&state=${state}`,
+      jar,
+    )
+    expect(response.headers.get('location')).toBe('/playground?auth_error=provider')
+    expect(sessionCookieNames(jar)).toEqual([])
+  })
 })
 
 describe('auth: logout', () => {
