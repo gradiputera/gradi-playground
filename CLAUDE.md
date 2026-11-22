@@ -10,7 +10,7 @@ Guidance for coding agents working in gradi-playground. Read this file first, th
 | `services/account-service` | PHP 8.4 / Laravel, `account` schema |
 | `services/ledger-service` | Java 25 / Vert.x 5, `ledger` schema |
 | `services/payment-service` | Go, `payment` schema |
-| `services/notification-service` | Node.js 24 / Hono, `notification` schema |
+| `services/notification-service` | Node.js 24 / Express, `notification` schema |
 | `services/reporting-service` | Python 3.13 / FastAPI, `reporting` schema |
 | `supabase/` | Platform layer: auth, schemas and roles, queues, cron |
 | `contracts/` | OpenAPI (per service) and AsyncAPI plus JSON Schema (events) |

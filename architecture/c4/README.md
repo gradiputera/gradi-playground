@@ -38,7 +38,7 @@ flowchart TB
         acc["account-service: PHP 8.4 / Laravel"]
         led["ledger-service: Java 25 / Vert.x 5"]
         pay["payment-service: Go"]
-        notif["notification-service: Node.js 24 / Hono"]
+        notif["notification-service: Node.js 24 / Express"]
         rep["reporting-service: Python 3.13 / FastAPI"]
     end
 

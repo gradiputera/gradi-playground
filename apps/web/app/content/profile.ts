@@ -36,7 +36,7 @@ export const profile: Profile = {
     'Java 25 / Vert.x',
     'PHP 8.4 / Laravel',
     'Go',
-    'Node.js / Hono',
+    'Node.js / Express',
     'Python 3.13 / FastAPI',
     'Nuxt',
     'Supabase',

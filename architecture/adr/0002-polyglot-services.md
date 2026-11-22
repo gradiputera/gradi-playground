@@ -2,6 +2,7 @@
 
 - Status: Accepted
 - Date: 2026-11-21
+- Amended: 2026-11-22. notification-service uses Express 5 instead of Hono (owner preference). It is a standalone npm project with its own lockfile, because each service's container builds from its own folder. Recorded in the notification-service `service-skeleton` change (design D1 and D2).
 
 ## Context
 
@@ -16,7 +17,7 @@ Each service uses exactly one language and framework, chosen for the service's r
 | account-service | PHP 8.4 / Laravel | `account` | Laravel migrations |
 | ledger-service | Java 25 / Vert.x 5 (Maven) | `ledger` | Flyway (`schemas=ledger`) |
 | payment-service | Go | `payment` | golang-migrate (`x-migrations-table` in `payment`) |
-| notification-service | Node.js 24 / TypeScript + Hono | `notification` | Drizzle Kit (`migrations.schema='notification'`) |
+| notification-service | Node.js 24 / TypeScript + Express | `notification` | Drizzle Kit (`migrations.schema='notification'`) |
 | reporting-service | Python 3.13 / FastAPI (uv) | `reporting` | Alembic (`version_table_schema='reporting'`) |
 
 Services integrate only through HTTP APIs and events, described by the contracts in `contracts/`, so language choice does not leak across boundaries.

@@ -83,10 +83,10 @@ Execution rules (read first):
 
 ## 4. Framework switch: Hono to Express
 
-- [ ] 4.1 Apply the ten edits in A26: nine exact text replacements and one inserted line in ADR 0002. Verify:
+- [x] 4.1 Apply the ten edits in A26: nine exact text replacements and one inserted line in ADR 0002. Verify:
   - `git grep -n -i "hono" -- CLAUDE.md README.md architecture openspec/config.yaml apps services/notification-service/openspec/config.yaml` prints exactly one line: the new `- Amended:` line in `architecture/adr/0002-polyglot-services.md`;
   - `git diff --stat` lists exactly these seven files, each with `1 insertion(+), 1 deletion(-)`, except `README.md` (`3 insertions(+), 3 deletions(-)`) and `architecture/adr/0002-polyglot-services.md` (`2 insertions(+), 1 deletion(-)`): `CLAUDE.md`, `README.md`, `apps/web/app/content/profile.ts`, `architecture/adr/0002-polyglot-services.md`, `architecture/c4/README.md`, `openspec/config.yaml`, `services/notification-service/openspec/config.yaml`.
-- [ ] 4.2 Commit group 4: `git add CLAUDE.md README.md apps/web/app/content/profile.ts architecture/adr/0002-polyglot-services.md architecture/c4/README.md openspec/config.yaml services/notification-service/openspec/config.yaml services/notification-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `docs: record Express for notification-service`. Verify: `git status --porcelain` is empty.
+- [x] 4.2 Commit group 4: `git add CLAUDE.md README.md apps/web/app/content/profile.ts architecture/adr/0002-polyglot-services.md architecture/c4/README.md openspec/config.yaml services/notification-service/openspec/config.yaml services/notification-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `docs: record Express for notification-service`. Verify: `git status --porcelain` is empty.
 
 ## 5. Documentation
 
