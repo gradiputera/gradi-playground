@@ -71,7 +71,7 @@ Execution rules (read first):
 
 ## 5. Integration check and pull request
 
-- [ ] 5.1 Run the full check from a clean state:
+- [x] 5.1 Run the full check from a clean state:
   ```bash
   rm -rf apps/web/.nuxt apps/web/.output
   pnpm install --frozen-lockfile
@@ -81,7 +81,7 @@ Execution rules (read first):
   npx -y @fission-ai/openspec@latest validate --all --strict
   ```
   Then run the secret scan. Verify: every command exits 0, and `git ls-files | grep -E "(^|/)(\.env|node_modules|\.nuxt|\.output)(/|$)"` prints nothing.
-- [ ] 5.2 Mark this task `- [x]`, commit `openspec/changes/web-skeleton-and-vercel-deploy/tasks.md` with message `docs(openspec): complete web-skeleton-and-vercel-deploy tasks` (after the secret scan), then run `git push -u origin feat/web-skeleton-and-vercel-deploy`. Open the pull request with `gh pr create --base main --head feat/web-skeleton-and-vercel-deploy --title "feat(web): Nuxt skeleton and Vercel deploy" --body-file <file>`. Write the body file in the scratchpad or system temp directory, not in the repository. The body has:
+- [x] 5.2 Mark this task `- [x]`, commit `openspec/changes/web-skeleton-and-vercel-deploy/tasks.md` with message `docs(openspec): complete web-skeleton-and-vercel-deploy tasks` (after the secret scan), then run `git push -u origin feat/web-skeleton-and-vercel-deploy`. Open the pull request with `gh pr create --base main --head feat/web-skeleton-and-vercel-deploy --title "feat(web): Nuxt skeleton and Vercel deploy" --body-file <file>`. Write the body file in the scratchpad or system temp directory, not in the repository. The body has:
   - `## Summary`: bullets for the workspace, the SSR main page, the CSR playground hub and placeholders, the health endpoint, the headers, the tests, CI and the docs;
   - `## Decisions`: links to ADR 0003 and ADR 0008, plus the OpenSpec change folder;
   - `## Checks`: typecheck, `Tests 11 passed`, build, `openspec validate --all --strict`, the gitleaks result, and the manual browser check result from task 3.2;
