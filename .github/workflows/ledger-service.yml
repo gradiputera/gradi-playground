@@ -1,0 +1,113 @@
+name: ledger-service
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "services/ledger-service/**"
+      - "contracts/openapi/ledger.yaml"
+      - "supabase/config.toml"
+      - "supabase/migrations/**"
+      - "supabase/seed.sql"
+      - ".github/workflows/ledger-service.yml"
+  pull_request:
+    paths:
+      - "services/ledger-service/**"
+      - "contracts/openapi/ledger.yaml"
+      - "supabase/config.toml"
+      - "supabase/migrations/**"
+      - "supabase/seed.sql"
+      - ".github/workflows/ledger-service.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  ledger-service:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: services/ledger-service
+    env:
+      # Dummy values so env() references in supabase/config.toml resolve. Not real credentials.
+      SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_ID: ci-dummy-client-id
+      SUPABASE_AUTH_EXTERNAL_GOOGLE_SECRET: ci-dummy-secret
+      SUPABASE_AUTH_CAPTCHA_SECRET: ci-dummy-captcha
+      # Local-only role password from supabase/seed.sql. Not a real credential.
+      LOCAL_DATABASE_URL: postgres://ledger_service:local-dev-only-ledger@127.0.0.1:54322/postgres
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: maven
+
+      - name: Validate service specs
+        run: npx -y @fission-ai/openspec@latest validate --all --strict
+
+      - name: Check the API contract for breaking changes
+        if: github.event_name == 'pull_request'
+        working-directory: .
+        run: |
+          git show "origin/${{ github.base_ref }}:contracts/openapi/ledger.yaml" > "$RUNNER_TEMP/ledger-base.yaml"
+          cp contracts/openapi/ledger.yaml "$RUNNER_TEMP/ledger-revision.yaml"
+          docker run --rm -v "$RUNNER_TEMP:/specs:ro" tufin/oasdiff:v1.39.0 \
+            breaking --fail-on ERR /specs/ledger-base.yaml /specs/ledger-revision.yaml
+
+      - uses: supabase/setup-cli@v3
+        with:
+          version: 3.2.0
+
+      - name: Generate an ephemeral JWT signing key
+        working-directory: .
+        run: |
+          echo '[]' > supabase/signing_keys.json
+          supabase gen signing-key --algorithm ES256 --append
+
+      # Database, auth and gateway only.
+      - name: Start the local Supabase stack
+        working-directory: .
+        run: supabase start -x realtime,storage-api,imgproxy,mailpit,studio,edge-runtime,logflare,vector,supavisor
+
+      # Unit tests and the integration tests against the local stack, then the shaded jar.
+      - name: Test and package
+        run: |
+          eval "$(supabase status -o env)"
+          LEDGER_TEST_DATABASE_URL="$LOCAL_DATABASE_URL" \
+          LEDGER_TEST_SUPABASE_URL="$API_URL" \
+          LEDGER_TEST_SUPABASE_KEY="$PUBLISHABLE_KEY" \
+            mvn -B verify
+
+      - name: Check that the integration tests ran
+        run: |
+          report=target/surefire-reports/TEST-io.github.gradiputera.ledger.integration.LocalStackTest.xml
+          grep -q 'tests="6"' "$report"
+          grep -q 'skipped="0"' "$report"
+          grep -q 'failures="0"' "$report"
+
+      - name: Build the container image
+        run: docker build -t ledger-service:ci .
+
+      - name: Smoke test the container
+        run: |
+          eval "$(supabase status -o env)"
+          docker run -d --name ledger-service --network host \
+            -e PORT=8082 -e DATABASE_URL="$LOCAL_DATABASE_URL" -e SUPABASE_URL="$API_URL" \
+            ledger-service:ci
+          for i in $(seq 1 60); do
+            curl -fsS http://127.0.0.1:8082/health && break
+            sleep 1
+          done
+          test "$(curl -s http://127.0.0.1:8082/health)" = '{"status":"ok"}'
+          test "$(curl -s -o /dev/null -w '%{http_code}' -X POST http://127.0.0.1:8082/ledger/postings)" = 401
+          docker logs ledger-service
+
+      - name: Stop the local Supabase stack
+        if: always()
+        working-directory: .
+        run: supabase stop --no-backup
