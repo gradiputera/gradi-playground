@@ -72,14 +72,14 @@ Execution rules (read first):
 
 ## 3. CI, contract and Dependabot
 
-- [ ] 3.1 Create `.github/workflows/notification-service.yml` (A23). Replace `contracts/openapi/notification.yaml` with A24. Append A25 to `.github/dependabot.yml`. Verify:
+- [x] 3.1 Create `.github/workflows/notification-service.yml` (A23). Replace `contracts/openapi/notification.yaml` with A24. Append A25 to `.github/dependabot.yml`. Verify:
   - `npx -y yaml-lint@1.7.0 .github/workflows/notification-service.yml contracts/openapi/notification.yaml .github/dependabot.yml` reports the files as valid;
   - `git diff --stat contracts/openapi/notification.yaml` shows `4 insertions(+)` and no deletions;
   - `git diff --stat .github/dependabot.yml` shows `8 insertions(+)` and no deletions;
   - `grep -c "package-ecosystem" .github/dependabot.yml` prints `10`.
 
   The breaking-change check for the contract (oasdiff) runs in CI on the pull request. Do not run it locally.
-- [ ] 3.2 Commit group 3: `git add .github/workflows/notification-service.yml contracts/openapi/notification.yaml .github/dependabot.yml services/notification-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `ci(notification-service): build, test and contract checks`. Verify: `git status --porcelain` is empty.
+- [x] 3.2 Commit group 3: `git add .github/workflows/notification-service.yml contracts/openapi/notification.yaml .github/dependabot.yml services/notification-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `ci(notification-service): build, test and contract checks`. Verify: `git status --porcelain` is empty.
 
 ## 4. Framework switch: Hono to Express
 
