@@ -90,11 +90,11 @@ Execution rules (read first):
 
 ## 4. Documentation
 
-- [ ] 4.1 Replace `services/account-service/README.md` with A37 and create `services/account-service/.env.example` (A36). Verify:
+- [x] 4.1 Replace `services/account-service/README.md` with A37 and create `services/account-service/.env.example` (A36). Verify:
   - `git check-ignore -q services/account-service/.env` exits 0 (ignored);
   - `git check-ignore -q services/account-service/.env.example` exits 1 (not ignored);
   - every relative link in the README points to an existing file: `.env.example`, `../../contracts/openapi/account.yaml`, and the five ADR files under `../../architecture/adr/`.
-- [ ] 4.2 Commit group 4: `git add services/account-service/README.md services/account-service/.env.example services/account-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `docs(account-service): configuration, local development and owner setup`. Verify: `git status --porcelain` is empty.
+- [x] 4.2 Commit group 4: `git add services/account-service/README.md services/account-service/.env.example services/account-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `docs(account-service): configuration, local development and owner setup`. Verify: `git status --porcelain` is empty.
 
 ## 5. Integration check and pull request
 
