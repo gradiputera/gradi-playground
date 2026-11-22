@@ -76,18 +76,18 @@ Execution rules (read first):
 
 ## 3. CI, contract and Dependabot
 
-- [ ] 3.1 Create `.github/workflows/ledger-service.yml` (A20). Replace `contracts/openapi/ledger.yaml` with A21. Append A22 to `.github/dependabot.yml`. Verify:
+- [x] 3.1 Create `.github/workflows/ledger-service.yml` (A20). Replace `contracts/openapi/ledger.yaml` with A21. Append A22 to `.github/dependabot.yml`. Verify:
   - `npx -y yaml-lint@1.7.0 .github/workflows/ledger-service.yml contracts/openapi/ledger.yaml .github/dependabot.yml` reports the files as valid;
   - `git diff --stat contracts/openapi/ledger.yaml` shows `10 insertions(+)` and no deletions;
   - `git diff --stat .github/dependabot.yml` shows `8 insertions(+)` and no deletions;
   - `grep -c "package-ecosystem" .github/dependabot.yml` prints `6`.
-- [ ] 3.2 Check the contract change for breaking changes:
+- [x] 3.2 Check the contract change for breaking changes:
   ```bash
   git show main:contracts/openapi/ledger.yaml > "$TEMP/ledger-base.yaml"
   GOTOOLCHAIN=go1.27.4 go run github.com/oasdiff/oasdiff@v1.39.0 breaking --fail-on ERR "$TEMP/ledger-base.yaml" contracts/openapi/ledger.yaml
   ```
   Verify: the command exits 0 and reports no breaking changes.
-- [ ] 3.3 Commit group 3: run the secret scan, then `git add .github/workflows/ledger-service.yml contracts/openapi/ledger.yaml .github/dependabot.yml services/ledger-service/openspec/changes/service-skeleton/tasks.md`, and commit with message `ci(ledger-service): build, test and contract checks`. Verify: `git status --porcelain` is empty.
+- [x] 3.3 Commit group 3: run the secret scan, then `git add .github/workflows/ledger-service.yml contracts/openapi/ledger.yaml .github/dependabot.yml services/ledger-service/openspec/changes/service-skeleton/tasks.md`, and commit with message `ci(ledger-service): build, test and contract checks`. Verify: `git status --porcelain` is empty.
 
 ## 4. Documentation
 

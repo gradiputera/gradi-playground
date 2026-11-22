@@ -29,6 +29,8 @@ paths:
           description: Entry posted.
         "401":
           description: Missing or invalid bearer token.
+        "501":
+          description: Not implemented yet (planned endpoint).
   /ledger/journal:
     get:
       summary: List journal entries for the caller's sandbox
@@ -37,6 +39,8 @@ paths:
           description: Journal entries.
         "401":
           description: Missing or invalid bearer token.
+        "501":
+          description: Not implemented yet (planned endpoint).
   /ledger/general-ledger:
     get:
       summary: General ledger per account with running balance
@@ -45,6 +49,8 @@ paths:
           description: General ledger report.
         "401":
           description: Missing or invalid bearer token.
+        "501":
+          description: Not implemented yet (planned endpoint).
   /ledger/trial-balance:
     get:
       summary: Trial balance (debits equal credits)
@@ -53,6 +59,8 @@ paths:
           description: Trial balance.
         "401":
           description: Missing or invalid bearer token.
+        "501":
+          description: Not implemented yet (planned endpoint).
   /sandbox/reset:
     post:
       summary: Reset the caller's ledger to the chart of accounts and opening entries
@@ -61,6 +69,8 @@ paths:
           description: Caller's rows were deleted and the seed was re-applied.
         "401":
           description: Missing or invalid bearer token.
+        "501":
+          description: Not implemented yet (planned endpoint).
 components:
   securitySchemes:
     bearerAuth:

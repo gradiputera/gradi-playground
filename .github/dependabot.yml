@@ -30,3 +30,11 @@ updates:
     directory: /services/payment-service
     schedule:
       interval: weekly
+  - package-ecosystem: maven
+    directory: /services/ledger-service
+    schedule:
+      interval: weekly
+  - package-ecosystem: docker
+    directory: /services/ledger-service
+    schedule:
+      interval: weekly
