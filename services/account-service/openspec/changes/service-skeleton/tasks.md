@@ -25,14 +25,14 @@ Execution rules (read first):
 
 ## 1. Laravel app and service code (specs: service-baseline, accounts-and-balances)
 
-- [ ] 1.1 Check the tools and the branch:
+- [x] 1.1 Check the tools and the branch:
   - `git branch --show-current` must print `feat/account-service-skeleton`;
   - `<PHP> "$PHP" -v | head -1` must start with `PHP 8.4.`;
   - `<PHP> "$PHP" "$COMPOSER_PHAR" --version` must start with `Composer version 2.`;
   - `node --version` must start with `v26.`.
 
   Verify: all four outputs match.
-- [ ] 1.2 Create these files from the Appendix. `S` stands for `services/account-service`:
+- [x] 1.2 Create these files from the Appendix. `S` stands for `services/account-service`:
   - `S/composer.json` (A1), `S/artisan` (A2), `S/phpunit.xml` (A3);
   - `S/bootstrap/app.php` (A4), `S/bootstrap/cache/.gitignore` (A5), `S/public/index.php` (A6), `S/routes/api.php` (A7);
   - `S/config/database.php` (A8), `S/config/logging.php` (A9), `S/config/cache.php` (A10), `S/config/session.php` (A11), `S/config/services.php` (A12);
@@ -46,7 +46,7 @@ Execution rules (read first):
   Then copy the lockfile: `cp services/account-service/openspec/changes/service-skeleton/assets/composer.lock services/account-service/composer.lock`.
 
   Verify: `find services/account-service -type f -not -path "*/openspec/*" -not -path "*/vendor/*" | wc -l` prints `31` (29 Appendix files, `composer.lock`, and the existing `README.md`).
-- [ ] 1.3 Install and test:
+- [x] 1.3 Install and test:
   ```bash
   cd services/account-service && <PHP> "$PHP" "$COMPOSER_PHAR" install --no-interaction --no-progress && "$PHP" vendor/bin/phpunit --no-progress
   ```
@@ -54,14 +54,14 @@ Execution rules (read first):
   - `composer install` ends with `Generating optimized autoload files`;
   - `diff services/account-service/composer.lock services/account-service/openspec/changes/service-skeleton/assets/composer.lock` prints nothing: the lockfile is unchanged;
   - PHPUnit ends with `OK, but some tests were skipped!` and `Tests: 21, Assertions: 36, Skipped: 4.` The 4 skipped tests are the integration tests, which skip themselves without their environment.
-- [ ] 1.4 Check the package and configuration:
+- [x] 1.4 Check the package and configuration:
   - `cd services/account-service && <PHP> "$PHP" "$COMPOSER_PHAR" validate --no-check-publish` exits 0. It may print warnings about exact version constraints; they are expected (`design.md`, D6);
   - `grep -rn -i "APP_DEBUG.\{0,3\}true" services/account-service --include="*.php" --include="*.xml" --include="*.example" --include="Dockerfile" -l | wc -l` prints `0`.
-- [ ] 1.5 Confirm that every outbound call has a timeout. Each command must print `1`:
+- [x] 1.5 Confirm that every outbound call has a timeout. Each command must print `1`:
   - `grep -c "connectTimeout(5)->timeout(5)" services/account-service/app/Auth/JwksTokenVerifier.php`;
   - `grep -c "PDO::ATTR_TIMEOUT => 10" services/account-service/config/database.php`;
   - `grep -c "connectTimeout(10)" services/account-service/tests/Integration/LocalStackTest.php`.
-- [ ] 1.6 Commit group 1: `git add services/account-service/composer.json services/account-service/composer.lock services/account-service/artisan services/account-service/phpunit.xml services/account-service/bootstrap services/account-service/public services/account-service/routes services/account-service/config services/account-service/app services/account-service/database services/account-service/storage services/account-service/tests services/account-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `feat(account-service): Laravel skeleton with JWT validation and accounts table`. Verify:
+- [x] 1.6 Commit group 1: `git add services/account-service/composer.json services/account-service/composer.lock services/account-service/artisan services/account-service/phpunit.xml services/account-service/bootstrap services/account-service/public services/account-service/routes services/account-service/config services/account-service/app services/account-service/database services/account-service/storage services/account-service/tests services/account-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `feat(account-service): Laravel skeleton with JWT validation and accounts table`. Verify:
   - `git status --porcelain` is empty;
   - `git ls-files services/account-service | grep -c "/vendor/"` prints `0`.
 
