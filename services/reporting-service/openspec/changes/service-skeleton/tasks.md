@@ -88,12 +88,12 @@ Execution rules (read first):
 
 ## 4. Documentation
 
-- [ ] 4.1 Replace `services/reporting-service/README.md` with A22 and create `services/reporting-service/.env.example` (A21). Verify:
+- [x] 4.1 Replace `services/reporting-service/README.md` with A22 and create `services/reporting-service/.env.example` (A21). Verify:
   - `git check-ignore -q services/reporting-service/.env` exits 0 (ignored);
   - `git check-ignore -q services/reporting-service/.env.example` exits 1 (not ignored);
   - `grep -c "whsec_bG9j" services/reporting-service/.env.example` prints `0` (the local secret is never written out);
   - every relative link in the README points to an existing file: `.env.example`, `../../contracts/openapi/reporting.yaml`, and the six ADR files under `../../architecture/adr/`.
-- [ ] 4.2 Commit group 4: `git add services/reporting-service/README.md services/reporting-service/.env.example services/reporting-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `docs(reporting-service): configuration, local development and owner setup`. Verify: `git status --porcelain` is empty.
+- [x] 4.2 Commit group 4: `git add services/reporting-service/README.md services/reporting-service/.env.example services/reporting-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `docs(reporting-service): configuration, local development and owner setup`. Verify: `git status --porcelain` is empty.
 
 ## 5. Integration check and pull request
 
