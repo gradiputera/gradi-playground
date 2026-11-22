@@ -51,3 +51,11 @@ updates:
     directory: /services/account-service
     schedule:
       interval: weekly
+  - package-ecosystem: npm
+    directory: /services/notification-service
+    schedule:
+      interval: weekly
+  - package-ecosystem: docker
+    directory: /services/notification-service
+    schedule:
+      interval: weekly

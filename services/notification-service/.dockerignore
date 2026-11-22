@@ -1,0 +1,11 @@
+.env
+.env.*
+node_modules/
+test/
+openspec/
+README.md
+Dockerfile
+.dockerignore
+vercel.json
+tsconfig.json
+drizzle.config.ts

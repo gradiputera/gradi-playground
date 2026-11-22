@@ -1,7 +1,7 @@
 schema: spec-driven
 
 context: |
-  notification-service: Node.js 24 with TypeScript and Hono. It owns the notification schema (Drizzle Kit), consumes events through signed webhooks and sends email through Gmail SMTP.
+  notification-service: Node.js 24 with TypeScript and Express 5. It owns the notification schema (Drizzle Kit), consumes events through signed webhooks and sends email through Gmail SMTP.
   Boundaries: access only the notification schema; integrate with other services only through HTTP APIs and events (contracts in contracts/).
   Decisions: ADR 0005 (events), ADR 0007 (auth), ADR 0009 (telemetry), ADR 0011 (sandbox reset), ADR 0014 (real email).
 

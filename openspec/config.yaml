@@ -1,7 +1,7 @@
 schema: spec-driven
 
 context: |
-  gradi-playground: public portfolio monorepo of polyglot microservices (PHP/Laravel, Java/Vert.x, Go, Node.js/Hono, Python/FastAPI), a Nuxt web app with a BFF, a Supabase Free platform layer and Grafana Cloud Free observability.
+  gradi-playground: public portfolio monorepo of polyglot microservices (PHP/Laravel, Java/Vert.x, Go, Node.js/Express, Python/FastAPI), a Nuxt web app with a BFF, a Supabase Free platform layer and Grafana Cloud Free observability.
   This root openspec/ holds system-level capabilities and cross-service changes. Service-specific changes live in services/<svc>/openspec/.
   Decisions are recorded in architecture/adr/ (ADRs 0001-0014). Read the relevant ADR before proposing a change.
 

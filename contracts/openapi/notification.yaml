@@ -30,6 +30,8 @@ paths:
           description: Event accepted (processed or already seen).
         "401":
           description: Signature or timestamp check failed.
+        "501":
+          description: Not implemented yet (signature verified; processing is planned).
   /sandbox/reset:
     post:
       summary: Delete the caller's notifications and stored addresses
@@ -38,6 +40,8 @@ paths:
           description: Caller's rows were deleted.
         "401":
           description: Missing or invalid bearer token.
+        "501":
+          description: Not implemented yet (planned endpoint).
 components:
   securitySchemes:
     bearerAuth:
