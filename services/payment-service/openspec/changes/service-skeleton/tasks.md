@@ -19,13 +19,13 @@ Execution rules (read first):
 
 ## 1. Go module and service code (spec: service-baseline)
 
-- [ ] 1.1 Check the tools and the branch:
+- [x] 1.1 Check the tools and the branch:
   - `git branch --show-current` must print `feat/payment-service-skeleton`;
   - `GOTOOLCHAIN=go1.27.4 go version` must print `go version go1.27.4` followed by the platform;
   - `node --version` must start with `v26.`.
 
   Verify: all three outputs match.
-- [ ] 1.2 Create these files from the Appendix:
+- [x] 1.2 Create these files from the Appendix:
   - `services/payment-service/go.mod` (A1);
   - `services/payment-service/main.go` (A2);
   - `services/payment-service/internal/auth/auth.go` (A3);
@@ -43,21 +43,21 @@ Execution rules (read first):
   cd services/payment-service && GOTOOLCHAIN=go1.27.4 go mod tidy && cd ../.. && diff "$TEMP/go.mod.a1" services/payment-service/go.mod && echo GO_MOD_UNCHANGED
   ```
   Verify: the command prints `GO_MOD_UNCHANGED`, and `services/payment-service/go.sum` exists.
-- [ ] 1.3 Check the code:
+- [x] 1.3 Check the code:
   ```bash
   cd services/payment-service && gofmt -l . && GOTOOLCHAIN=go1.27.4 go vet ./... && GOTOOLCHAIN=go1.27.4 go test ./...
   ```
   Verify:
   - `gofmt -l .` prints nothing and `go vet` prints nothing;
   - `go test` prints `ok` for `internal/auth`, `internal/httpapi` and `internal/integration` (the integration tests skip themselves without their environment), and `[no test files]` for the root package and `internal/migrations`.
-- [ ] 1.4 Confirm that every outbound call has a timeout. Each of these commands must print exactly one line:
+- [x] 1.4 Confirm that every outbound call has a timeout. Each of these commands must print exactly one line:
   ```bash
   grep -n "HTTPTimeout:               5 \* time.Second" services/payment-service/internal/auth/auth.go
   grep -n "context.WithTimeout(ctx, 30\*time.Second)" services/payment-service/main.go
   grep -n "Timeout: 10 \* time.Second" services/payment-service/internal/integration/integration_test.go
   ```
   Verify: three commands, one line each.
-- [ ] 1.5 Commit group 1: run the secret scan, then `git add services/payment-service/go.mod services/payment-service/go.sum services/payment-service/main.go services/payment-service/internal services/payment-service/openspec/changes/service-skeleton/tasks.md`, and commit with message `feat(payment-service): Go skeleton with JWT validation and own-schema migrations`. Verify: `git status --porcelain` is empty.
+- [x] 1.5 Commit group 1: run the secret scan, then `git add services/payment-service/go.mod services/payment-service/go.sum services/payment-service/main.go services/payment-service/internal services/payment-service/openspec/changes/service-skeleton/tasks.md`, and commit with message `feat(payment-service): Go skeleton with JWT validation and own-schema migrations`. Verify: `git status --porcelain` is empty.
 
 ## 2. Container and Vercel configuration
 
