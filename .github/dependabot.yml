@@ -43,3 +43,11 @@ updates:
       # Dependabot proposes non-LTS JDK tags (for example temurin-26), which the build rejects
       # (JDK [25,26) in pom.xml). Bump it by hand, together with the JDK, in its own change.
       - dependency-name: "maven"
+  - package-ecosystem: composer
+    directory: /services/account-service
+    schedule:
+      interval: weekly
+  - package-ecosystem: docker
+    directory: /services/account-service
+    schedule:
+      interval: weekly
