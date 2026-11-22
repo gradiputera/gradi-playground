@@ -90,12 +90,12 @@ Execution rules (read first):
 
 ## 5. Documentation
 
-- [ ] 5.1 Replace `services/notification-service/README.md` with A22 and create `services/notification-service/.env.example` (A21). Verify:
+- [x] 5.1 Replace `services/notification-service/README.md` with A22 and create `services/notification-service/.env.example` (A21). Verify:
   - `git check-ignore -q services/notification-service/.env` exits 0 (ignored);
   - `git check-ignore -q services/notification-service/.env.example` exits 1 (not ignored);
   - `grep -c "whsec_bG9j" services/notification-service/.env.example` prints `0` (the local secret is never written out);
   - every relative link in the README points to an existing file: `.env.example`, `../../contracts/openapi/notification.yaml`, and the six ADR files under `../../architecture/adr/`.
-- [ ] 5.2 Commit group 5: `git add services/notification-service/README.md services/notification-service/.env.example services/notification-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `docs(notification-service): configuration, local development and owner setup`. Verify: `git status --porcelain` is empty.
+- [x] 5.2 Commit group 5: `git add services/notification-service/README.md services/notification-service/.env.example services/notification-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `docs(notification-service): configuration, local development and owner setup`. Verify: `git status --porcelain` is empty.
 
 ## 6. Integration check and pull request
 
