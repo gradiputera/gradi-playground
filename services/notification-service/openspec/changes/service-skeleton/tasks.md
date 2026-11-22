@@ -53,13 +53,13 @@ Execution rules (read first):
   - `grep -c "AbortSignal.timeout(10_000)" services/notification-service/test/integration.test.ts`.
 
   Also confirm that nothing sends email: `grep -rn -i "smtp\|nodemailer\|sendmail" services/notification-service/src | wc -l` prints `0`.
-- [ ] 1.5 Commit group 1: `git add services/notification-service/package.json services/notification-service/package-lock.json services/notification-service/tsconfig.json services/notification-service/drizzle.config.ts services/notification-service/src services/notification-service/drizzle services/notification-service/test services/notification-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `feat(notification-service): Express skeleton with JWT, webhook signatures and inbox table`. Verify:
+- [x] 1.5 Commit group 1: `git add services/notification-service/package.json services/notification-service/package-lock.json services/notification-service/tsconfig.json services/notification-service/drizzle.config.ts services/notification-service/src services/notification-service/drizzle services/notification-service/test services/notification-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `feat(notification-service): Express skeleton with JWT, webhook signatures and inbox table`. Verify:
   - `git status --porcelain` is empty;
   - `git ls-files services/notification-service | grep -c "node_modules"` prints `0`.
 
 ## 2. Container and Vercel configuration
 
-- [ ] 2.1 Create these files from the Appendix:
+- [x] 2.1 Create these files from the Appendix:
   - `services/notification-service/Dockerfile` (A18);
   - `services/notification-service/.dockerignore` (A19);
   - `services/notification-service/vercel.json` (A20).
@@ -67,7 +67,8 @@ Execution rules (read first):
   Verify:
   - `node -e "JSON.parse(require('fs').readFileSync('services/notification-service/vercel.json','utf8'))"` exits 0;
   - if `docker info` succeeds, `docker build -t notification-service:local services/notification-service` exits 0. If `docker info` fails, write down "local image build not run (Docker unavailable); CI is authoritative" for the PR.
-- [ ] 2.2 Commit group 2: `git add services/notification-service/Dockerfile services/notification-service/.dockerignore services/notification-service/vercel.json services/notification-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `build(notification-service): container image and Vercel config`. Verify: `git status --porcelain` is empty.
+  - Result: `docker info` failed locally, so the image build was not run: local image build not run (Docker unavailable); CI is authoritative.
+- [x] 2.2 Commit group 2: `git add services/notification-service/Dockerfile services/notification-service/.dockerignore services/notification-service/vercel.json services/notification-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `build(notification-service): container image and Vercel config`. Verify: `git status --porcelain` is empty.
 
 ## 3. CI, contract and Dependabot
 
