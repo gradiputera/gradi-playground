@@ -47,8 +47,8 @@ Execution rules (read first):
 
 ## 3. Tests (specs: web-routing, web-hosting)
 
-- [ ] 3.1 Create `apps/web/test/e2e/web.test.ts` (A17) exactly. Verify: `pnpm --filter web test` prints `Tests  11 passed (11)` and exits 0. If a test fails, compare the files with the Appendix character by character and fix any difference. Do not change the test to make it pass.
-- [ ] 3.2 Check the unknown-playground-path scenario by hand:
+- [x] 3.1 Create `apps/web/test/e2e/web.test.ts` (A17) exactly. Verify: `pnpm --filter web test` prints `Tests  11 passed (11)` and exits 0. If a test fails, compare the files with the Appendix character by character and fix any difference. Do not change the test to make it pass.
+- [x] 3.2 Check the unknown-playground-path scenario by hand:
   1. Run `pnpm --filter web build`.
   2. Start the server in the background with `node apps/web/.output/server/index.mjs`. It listens on `http://localhost:3000`.
   3. Open `http://localhost:3000/playground/does-not-exist` in a browser tool, if you have one (for example the built-in browser pane). Confirm the page shows "Page not found" with a "Back to the main page" link.
@@ -56,7 +56,7 @@ Execution rules (read first):
   5. Stop the server.
 
   If no browser tool is available, skip steps 3 and 4 and note "manual browser check not run" for the PR description. Verify: the result (passed, or not run) is written down for task 5.2.
-- [ ] 3.3 Commit group 3: run the secret scan, then `git add apps/web/test openspec/changes/web-skeleton-and-vercel-deploy/tasks.md`, and commit with message `test(web): verify rendering, headers and health against a production build`. Verify: `git status --porcelain` is empty.
+- [x] 3.3 Commit group 3: run the secret scan, then `git add apps/web/test openspec/changes/web-skeleton-and-vercel-deploy/tasks.md`, and commit with message `test(web): verify rendering, headers and health against a production build`. Verify: `git status --porcelain` is empty.
 
 ## 4. Documentation
 
