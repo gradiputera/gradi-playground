@@ -155,7 +155,7 @@ Items are delivered one OpenSpec change at a time.
 | # | Item | Status |
 |---|---|---|
 | 1 | Supabase platform layer: config, Google and anonymous auth, schemas and roles bootstrap, pgmq queues and dispatcher, cron cleanup | Done |
-| 2 | `apps/web`: SSR main page, CSR playground hub, guest and Google PKCE flow, BFF basics | In progress |
+| 2 | `apps/web`: SSR main page, CSR playground hub, guest and Google PKCE flow, BFF basics | Done |
 | 3 | One pull request per service: skeleton, JWT middleware, own migrations, Dockerfile, CI, Vercel project | Planned |
 | 4 | Eventing end to end (outbox, pgmq, dispatcher, consumers, DLQ and replay) and real email | Planned |
 | 5 | Payment playground: timeline, general ledger section, DC/DRC panel, reset to seed | Planned |
