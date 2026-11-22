@@ -67,7 +67,7 @@ Execution rules (read first):
 
 ## 2. Container and Vercel configuration
 
-- [ ] 2.1 Create these files from the Appendix:
+- [x] 2.1 Create these files from the Appendix:
   - `services/account-service/docker/Caddyfile` (A30), `services/account-service/docker/php.ini` (A31), `services/account-service/docker/entrypoint.sh` (A32);
   - `services/account-service/Dockerfile` (A33), `services/account-service/.dockerignore` (A34), `services/account-service/vercel.json` (A35).
 
@@ -75,7 +75,7 @@ Execution rules (read first):
   - `node -e "JSON.parse(require('fs').readFileSync('services/account-service/vercel.json','utf8'))"` exits 0;
   - `sh -n services/account-service/docker/entrypoint.sh` exits 0 (shell syntax);
   - if `docker info` succeeds, `docker build -t account-service:local services/account-service` exits 0. If `docker info` fails, write down "local image build not run (Docker unavailable); CI is authoritative" for the PR.
-- [ ] 2.2 Commit group 2: `git add services/account-service/docker services/account-service/Dockerfile services/account-service/.dockerignore services/account-service/vercel.json services/account-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `build(account-service): FrankenPHP container image and Vercel config`. Verify: `git status --porcelain` is empty.
+- [x] 2.2 Commit group 2: `git add services/account-service/docker services/account-service/Dockerfile services/account-service/.dockerignore services/account-service/vercel.json services/account-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `build(account-service): FrankenPHP container image and Vercel config`. Verify: `git status --porcelain` is empty.
 
 ## 3. CI, contract and Dependabot
 

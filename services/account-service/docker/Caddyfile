@@ -1,0 +1,14 @@
+# FrankenPHP (Caddy with PHP built in) serving the Laravel public/ folder.
+{
+	frankenphp
+	admin off
+	auto_https off
+	skip_install_trust
+	# Vercel sends SIGTERM and allows 30 seconds; finish in-flight requests within 20.
+	grace_period 20s
+}
+
+:{$PORT:80} {
+	root * /app/public
+	php_server
+}

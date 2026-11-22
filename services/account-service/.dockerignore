@@ -1,0 +1,14 @@
+.env
+.env.*
+vendor/
+tests/
+openspec/
+storage/logs/*.log
+bootstrap/cache/*.php
+phpunit.xml
+.phpunit.result.cache
+.phpunit.cache/
+README.md
+Dockerfile
+.dockerignore
+vercel.json
