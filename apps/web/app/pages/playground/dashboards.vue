@@ -1,4 +1,5 @@
 <script setup lang="ts">
+definePageMeta({ layout: 'playground' })
 useHead({ title: 'Dashboards · gradi-playground' })
 </script>
 

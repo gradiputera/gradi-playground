@@ -12,15 +12,28 @@ const playground = {
   headers: { ...securityHeaders, 'X-Robots-Tag': 'noindex' },
 }
 
+const noStore = { headers: { ...securityHeaders, 'Cache-Control': 'no-store' } }
+
 export default defineNuxtConfig({
   compatibilityDate: '2026-11-21',
   telemetry: false,
   devtools: { enabled: false },
   css: ['~/assets/css/main.css'],
+  // Server-only values come from NUXT_SUPABASE_URL and NUXT_SUPABASE_KEY at runtime.
+  // Only the Turnstile site key (NUXT_PUBLIC_TURNSTILE_SITE_KEY) is sent to the browser.
+  runtimeConfig: {
+    supabaseUrl: '',
+    supabaseKey: '',
+    public: {
+      turnstileSiteKey: '',
+    },
+  },
   routeRules: {
     '/**': { headers: securityHeaders },
     '/playground': playground,
     '/playground/**': playground,
-    '/api/health': { headers: { ...securityHeaders, 'Cache-Control': 'no-store' } },
+    '/api/health': noStore,
+    '/api/auth/**': noStore,
+    '/auth/**': noStore,
   },
 })
