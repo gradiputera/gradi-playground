@@ -97,7 +97,7 @@ Execution rules (read first):
 
 ## 5. Integration check and pull request
 
-- [ ] 5.1 Run the full check from a clean state:
+- [x] 5.1 Run the full check from a clean state:
   ```bash
   UVPATH && cd services/reporting-service && rm -rf .venv && uv sync --locked && uv run ruff check . && uv run ruff format --check . && uv run mypy && uv run pytest && npx -y @fission-ai/openspec@latest validate --all --strict && cd ../.. && npx -y @fission-ai/openspec@latest validate --all --strict
   ```
@@ -110,7 +110,7 @@ Execution rules (read first):
   - the gitleaks scan prints `no leaks found`;
   - `git status --porcelain` is empty;
   - `git ls-files | grep -E "(^|/)(\.env|\.venv|node_modules|vendor|\.nuxt|\.output|target|__pycache__)(/|$)"` prints nothing.
-- [ ] 5.2 Mark this task `- [x]`, `git add` `services/reporting-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `docs(openspec): complete reporting-service service-skeleton tasks`. Then run `git push -u origin feat/reporting-service-skeleton`. Open the pull request with `gh pr create --base main --head feat/reporting-service-skeleton --title "feat(reporting-service): FastAPI service skeleton" --body-file <file>`. Write the body file in the scratchpad or system temp directory, not in the repository. The body has:
+- [x] 5.2 Mark this task `- [x]`, `git add` `services/reporting-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `docs(openspec): complete reporting-service service-skeleton tasks`. Then run `git push -u origin feat/reporting-service-skeleton`. Open the pull request with `gh pr create --base main --head feat/reporting-service-skeleton --title "feat(reporting-service): FastAPI service skeleton" --body-file <file>`. Write the body file in the scratchpad or system temp directory, not in the repository. The body has:
   - `## Summary`: bullets for:
     - the FastAPI app on Python 3.13, managed with uv;
     - JWT validation with PyJWT and a JWKS cache with a refetch cooldown;
