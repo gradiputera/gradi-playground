@@ -1,0 +1,14 @@
+.env
+.env.*
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+tests/
+openspec/
+README.md
+Dockerfile
+.dockerignore
+vercel.json
+alembic.ini
