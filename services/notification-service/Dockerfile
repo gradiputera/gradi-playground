@@ -1,6 +1,6 @@
 # One image for Vercel (Container runtime), Docker Compose and Kubernetes (ADR 0003).
 
-FROM node:24.22.3-trixie-slim AS build
+FROM node:26.13.1-trixie-slim AS build
 WORKDIR /app
 COPY package.json package-lock.json ./
 # Production dependencies only; none of them needs an install script.
