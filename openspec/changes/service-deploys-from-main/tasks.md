@@ -19,17 +19,17 @@ Execution rules (read first):
 
 ## 1. Service Vercel configuration (spec: service-hosting)
 
-- [ ] 1.1 Bring in `main`, which must already contain reporting-service:
+- [x] 1.1 Bring in `main`, which must already contain reporting-service:
   - `gh pr view 39 --json state -q .state` must print `MERGED`. If it prints anything else, stop and report.
   - Run `git fetch origin && git merge --no-edit origin/main`.
 
   Verify: `git branch --show-current` prints `chore/service-deploys-from-main`, and `ls services/*/vercel.json | wc -l` prints `5`.
-- [ ] 1.2 Replace each of the five `services/<svc>/vercel.json` files with A1. Verify, for each of the five files:
+- [x] 1.2 Replace each of the five `services/<svc>/vercel.json` files with A1. Verify, for each of the five files:
   - `node -e "JSON.parse(require('fs').readFileSync('<file>','utf8'))"` exits 0;
   - `grep -c '"\*\*": false' <file>` prints `1` and `grep -c '"main": true' <file>` prints `1`;
   - the five files are identical: `md5sum services/*/vercel.json | awk '{print $1}' | sort -u | wc -l` prints `1`;
   - `git diff --stat -- services` lists exactly the five files, each with `7 insertions(+), 1 deletion(-)`.
-- [ ] 1.3 Commit group 1: `git add services/account-service/vercel.json services/ledger-service/vercel.json services/payment-service/vercel.json services/notification-service/vercel.json services/reporting-service/vercel.json openspec/changes/service-deploys-from-main/tasks.md`, run the secret scan, and commit with message `build(services): deploy service projects from main only`. Verify: `git status --porcelain` is empty.
+- [x] 1.3 Commit group 1: `git add services/account-service/vercel.json services/ledger-service/vercel.json services/payment-service/vercel.json services/notification-service/vercel.json services/reporting-service/vercel.json openspec/changes/service-deploys-from-main/tasks.md`, run the secret scan, and commit with message `build(services): deploy service projects from main only`. Verify: `git status --porcelain` is empty.
 
 ## 2. Documentation
 
