@@ -99,7 +99,7 @@ Execution rules (read first):
 
 ## 5. Integration check and pull request
 
-- [ ] 5.1 Run the full check from a clean state:
+- [x] 5.1 Run the full check from a clean state:
   ```bash
   cd services/ledger-service && <JAVA> "$MVN" -B clean package 2>&1 | grep -E "Tests run: 18|BUILD" && npx -y @fission-ai/openspec@latest validate --all --strict && cd ../.. && npx -y @fission-ai/openspec@latest validate --all --strict
   ```
@@ -108,7 +108,7 @@ Execution rules (read first):
   - both `validate` commands exit 0;
   - `git status --porcelain` is empty (the `target/` folder is gitignored);
   - `git ls-files | grep -E "(^|/)(\.env|node_modules|\.nuxt|\.output|target)(/|$)"` prints nothing.
-- [ ] 5.2 Mark this task `- [x]`, commit `services/ledger-service/openspec/changes/service-skeleton/tasks.md` with message `docs(openspec): complete ledger-service service-skeleton tasks` (after the secret scan), then run `git push -u origin feat/ledger-service-skeleton`. Open the pull request with `gh pr create --base main --head feat/ledger-service-skeleton --title "feat(ledger-service): Vert.x service skeleton" --body-file <file>`. Write the body file in the scratchpad or system temp directory, not in the repository. The body has:
+- [x] 5.2 Mark this task `- [x]`, commit `services/ledger-service/openspec/changes/service-skeleton/tasks.md` with message `docs(openspec): complete ledger-service service-skeleton tasks` (after the secret scan), then run `git push -u origin feat/ledger-service-skeleton`. Open the pull request with `gh pr create --base main --head feat/ledger-service-skeleton --title "feat(ledger-service): Vert.x service skeleton" --body-file <file>`. Write the body file in the scratchpad or system temp directory, not in the repository. The body has:
   - `## Summary`: bullets for:
     - the Maven project and Vert.x HTTP server;
     - JWT validation with Vert.x `JWTAuth` and JWKS;
