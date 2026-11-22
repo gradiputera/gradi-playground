@@ -1,0 +1,8 @@
+.env
+.env.*
+**/*_test.go
+openspec/
+README.md
+Dockerfile
+.dockerignore
+vercel.json
