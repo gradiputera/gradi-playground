@@ -1,6 +1,6 @@
 # One image for Vercel (Container runtime), Docker Compose and Kubernetes (ADR 0003).
 
-FROM maven:3.9.16-eclipse-temurin-25-noble AS build
+FROM maven:3.9-eclipse-temurin-26-noble AS build
 WORKDIR /src
 COPY pom.xml ./
 RUN mvn -B -q dependency:go-offline
