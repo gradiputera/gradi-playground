@@ -17,7 +17,7 @@ const skip = databaseUrl === '' || supabaseUrl === '' || supabaseKey === '' ? 'i
 describe('local Supabase stack', { skip }, () => {
   it('applies migrations into the notification schema, and a rerun is a no-op', async () => {
     await migrateDatabase(databaseUrl);
-    await migrateDatabase(databaseUrl);
+    assert.equal(await migrateDatabase(databaseUrl), 0, 'the second run applies nothing');
     const sql = connect(databaseUrl);
     try {
       const [tables] = await sql`select to_regclass('notification.inbox') is not null as inbox,

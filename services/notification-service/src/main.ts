@@ -12,8 +12,8 @@ async function main(): Promise<void> {
   const port = Number(process.env['PORT'] || '80');
   const key = webhookKey(WEBHOOK_SECRET);
 
-  await migrateDatabase(DATABASE_URL);
-  log.info('migrations applied');
+  const applied = await migrateDatabase(DATABASE_URL);
+  log.info('migrations applied', { applied });
 
   const app = createApp({ verifyToken: createJwksVerifier(SUPABASE_URL), webhookKey: key });
   const server = app.listen(port, () => log.info('listening', { port }));
