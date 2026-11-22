@@ -91,11 +91,11 @@ Execution rules (read first):
 
 ## 4. Documentation
 
-- [ ] 4.1 Replace `services/ledger-service/README.md` with A19 and create `services/ledger-service/.env.example` (A18). Verify:
+- [x] 4.1 Replace `services/ledger-service/README.md` with A19 and create `services/ledger-service/.env.example` (A18). Verify:
   - `git check-ignore -q services/ledger-service/.env` exits 0 (ignored);
   - `git check-ignore -q services/ledger-service/.env.example` exits 1 (not ignored);
   - every relative link in the README points to an existing file: `.env.example`, `../../contracts/openapi/ledger.yaml`, and the six ADR files under `../../architecture/adr/`.
-- [ ] 4.2 Commit group 4: run the secret scan, then `git add services/ledger-service/README.md services/ledger-service/.env.example services/ledger-service/openspec/changes/service-skeleton/tasks.md`, and commit with message `docs(ledger-service): configuration, local development and owner setup`. Verify: `git status --porcelain` is empty.
+- [x] 4.2 Commit group 4: run the secret scan, then `git add services/ledger-service/README.md services/ledger-service/.env.example services/ledger-service/openspec/changes/service-skeleton/tasks.md`, and commit with message `docs(ledger-service): configuration, local development and owner setup`. Verify: `git status --porcelain` is empty.
 
 ## 5. Integration check and pull request
 
