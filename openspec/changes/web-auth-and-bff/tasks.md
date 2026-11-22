@@ -27,8 +27,8 @@ Execution rules (read first):
 
 ## 2. BFF auth endpoints (spec: auth)
 
-- [ ] 2.1 Replace `apps/web/nuxt.config.ts` with A2. Create `apps/web/server/utils/supabase.ts` (A4) and `apps/web/server/utils/oauth-state.ts` (A5). Verify: `pnpm --filter web typecheck` exits 0.
-- [ ] 2.2 Create the endpoints:
+- [x] 2.1 Replace `apps/web/nuxt.config.ts` with A2. Create `apps/web/server/utils/supabase.ts` (A4) and `apps/web/server/utils/oauth-state.ts` (A5). Verify: `pnpm --filter web typecheck` exits 0.
+- [x] 2.2 Create the endpoints:
   - `apps/web/server/api/auth/session.get.ts` (A6);
   - `apps/web/server/api/auth/guest.post.ts` (A7);
   - `apps/web/server/api/auth/logout.post.ts` (A8);
@@ -36,7 +36,7 @@ Execution rules (read first):
   - `apps/web/server/routes/auth/callback.get.ts` (A10).
 
   Verify: `pnpm --filter web typecheck` exits 0, and `pnpm --filter web build` ends with `Build complete`.
-- [ ] 2.3 Commit group 2: run the secret scan, then `git add apps/web/nuxt.config.ts apps/web/server openspec/changes/web-auth-and-bff/tasks.md`, and commit with message `feat(web): add BFF auth endpoints`. Verify: `git status --porcelain` is empty.
+- [x] 2.3 Commit group 2: run the secret scan, then `git add apps/web/nuxt.config.ts apps/web/server openspec/changes/web-auth-and-bff/tasks.md`, and commit with message `feat(web): add BFF auth endpoints`. Verify: `git status --porcelain` is empty.
 
 ## 3. Playground shell (specs: auth, web-routing)
 
