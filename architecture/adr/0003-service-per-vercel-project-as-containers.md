@@ -2,6 +2,7 @@
 
 - Status: Accepted
 - Date: 2026-11-21
+- Amended: 2026-11-22 (service projects deploy from `main` only)
 
 ## Context
 
@@ -10,6 +11,7 @@ The services must run on free hosting, scale to zero when idle, and still look l
 ## Decision
 
 - Each service is its own Vercel Hobby project, deployed from its own folder with the Vercel Container runtime.
+- Service projects deploy from `main` only (`git.deploymentEnabled` in each service's `vercel.json`). Pull requests are verified by each service's CI workflow, which tests the service and builds and smoke-tests its image, instead of by preview deployments: previews would count toward the Hobby deployment limit and would have no hosted configuration.
 - Each service listens on `$PORT` (default 80) and ships one Dockerfile. The same Dockerfile is used on Vercel, in Compose and in Kubernetes.
 - `apps/web` (Nuxt) deploys natively on Vercel and is not containerized.
 - Fallback host if the Container runtime (beta) misbehaves: a Render free web service, using the same Dockerfiles.
