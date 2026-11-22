@@ -1,0 +1,110 @@
+name: payment-service
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "services/payment-service/**"
+      - "contracts/openapi/payment.yaml"
+      - "supabase/config.toml"
+      - "supabase/migrations/**"
+      - "supabase/seed.sql"
+      - ".github/workflows/payment-service.yml"
+  pull_request:
+    paths:
+      - "services/payment-service/**"
+      - "contracts/openapi/payment.yaml"
+      - "supabase/config.toml"
+      - "supabase/migrations/**"
+      - "supabase/seed.sql"
+      - ".github/workflows/payment-service.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  payment-service:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: services/payment-service
+    env:
+      # Dummy values so env() references in supabase/config.toml resolve. Not real credentials.
+      SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_ID: ci-dummy-client-id
+      SUPABASE_AUTH_EXTERNAL_GOOGLE_SECRET: ci-dummy-secret
+      SUPABASE_AUTH_CAPTCHA_SECRET: ci-dummy-captcha
+      # Local-only role password from supabase/seed.sql. Not a real credential.
+      LOCAL_DATABASE_URL: postgres://payment_service:local-dev-only-payment@127.0.0.1:54322/postgres
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: services/payment-service/go.mod
+          cache-dependency-path: services/payment-service/go.sum
+
+      - name: Check formatting
+        run: test -z "$(gofmt -l .)" || { gofmt -l .; exit 1; }
+
+      - run: go vet ./...
+
+      - name: Unit tests
+        run: go test ./...
+
+      - name: Validate service specs
+        run: npx -y @fission-ai/openspec@latest validate --all --strict
+
+      - name: Check the API contract for breaking changes
+        if: github.event_name == 'pull_request'
+        working-directory: .
+        run: |
+          git show "origin/${{ github.base_ref }}:contracts/openapi/payment.yaml" > "$RUNNER_TEMP/payment-base.yaml"
+          go run github.com/oasdiff/oasdiff@v1.39.0 breaking --fail-on ERR "$RUNNER_TEMP/payment-base.yaml" contracts/openapi/payment.yaml
+
+      - uses: supabase/setup-cli@v3
+        with:
+          version: 3.2.0
+
+      - name: Generate an ephemeral JWT signing key
+        working-directory: .
+        run: |
+          echo '[]' > supabase/signing_keys.json
+          supabase gen signing-key --algorithm ES256 --append
+
+      # Database, auth and gateway only.
+      - name: Start the local Supabase stack
+        working-directory: .
+        run: supabase start -x realtime,storage-api,imgproxy,mailpit,studio,edge-runtime,logflare,vector,supavisor
+
+      - name: Integration tests against the local stack
+        run: |
+          eval "$(supabase status -o env)"
+          PAYMENT_TEST_DATABASE_URL="$LOCAL_DATABASE_URL" \
+          PAYMENT_TEST_SUPABASE_URL="$API_URL" \
+          PAYMENT_TEST_SUPABASE_KEY="$PUBLISHABLE_KEY" \
+            go test -count=1 -v ./internal/integration/
+
+      - name: Build the container image
+        run: docker build -t payment-service:ci .
+
+      - name: Smoke test the container
+        run: |
+          eval "$(supabase status -o env)"
+          docker run -d --name payment-service --network host \
+            -e PORT=8083 -e DATABASE_URL="$LOCAL_DATABASE_URL" -e SUPABASE_URL="$API_URL" \
+            payment-service:ci
+          for i in $(seq 1 30); do
+            curl -fsS http://127.0.0.1:8083/health && break
+            sleep 1
+          done
+          test "$(curl -s http://127.0.0.1:8083/health)" = '{"status":"ok"}'
+          test "$(curl -s -o /dev/null -w '%{http_code}' -X POST http://127.0.0.1:8083/payments)" = 401
+          docker logs payment-service
+
+      - name: Stop the local Supabase stack
+        if: always()
+        working-directory: .
+        run: supabase stop --no-backup

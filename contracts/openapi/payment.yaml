@@ -29,6 +29,8 @@ paths:
           description: Payment simulated; outcome returned.
         "401":
           description: Missing or invalid bearer token.
+        "501":
+          description: Not implemented yet (planned endpoint).
   /sandbox/reset:
     post:
       summary: Reset the caller's payments to seed
@@ -37,6 +39,8 @@ paths:
           description: Caller's rows were deleted and the seed was re-applied.
         "401":
           description: Missing or invalid bearer token.
+        "501":
+          description: Not implemented yet (planned endpoint).
 components:
   securitySchemes:
     bearerAuth:
