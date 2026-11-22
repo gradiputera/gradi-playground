@@ -98,7 +98,7 @@ Execution rules (read first):
 
 ## 5. Integration check and pull request
 
-- [ ] 5.1 Run the full check from a clean state:
+- [x] 5.1 Run the full check from a clean state:
   ```bash
   cd services/account-service && rm -rf vendor && <PHP> "$PHP" "$COMPOSER_PHAR" install --no-interaction --no-progress && "$PHP" vendor/bin/phpunit --no-progress && "$PHP" "$COMPOSER_PHAR" validate --no-check-publish && npx -y @fission-ai/openspec@latest validate --all --strict && cd ../.. && npx -y @fission-ai/openspec@latest validate --all --strict
   ```
@@ -111,7 +111,7 @@ Execution rules (read first):
   - the gitleaks scan prints `no leaks found`;
   - `git status --porcelain` is empty;
   - `git ls-files | grep -E "(^|/)(\.env|node_modules|vendor|\.nuxt|\.output|target)(/|$)"` prints nothing.
-- [ ] 5.2 Mark this task `- [x]`, `git add` `services/account-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `docs(openspec): complete account-service service-skeleton tasks`. Then run `git push -u origin feat/account-service-skeleton`. Open the pull request with `gh pr create --base main --head feat/account-service-skeleton --title "feat(account-service): Laravel service skeleton" --body-file <file>`. Write the body file in the scratchpad or system temp directory, not in the repository. The body has:
+- [x] 5.2 Mark this task `- [x]`, `git add` `services/account-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `docs(openspec): complete account-service service-skeleton tasks`. Then run `git push -u origin feat/account-service-skeleton`. Open the pull request with `gh pr create --base main --head feat/account-service-skeleton --title "feat(account-service): Laravel service skeleton" --body-file <file>`. Write the body file in the scratchpad or system temp directory, not in the repository. The body has:
   - `## Summary`: bullets for:
     - the minimal Laravel 13 app with JSON-only errors;
     - JWT validation with firebase/php-jwt and JWKS;
