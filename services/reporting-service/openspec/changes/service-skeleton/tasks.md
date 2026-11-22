@@ -26,13 +26,13 @@ Execution rules (read first):
 
 ## 1. FastAPI app and service code (specs: service-baseline, transaction-reporting)
 
-- [ ] 1.1 Check the tools and the branch:
+- [x] 1.1 Check the tools and the branch:
   - `git branch --show-current` must print `feat/reporting-service-skeleton`;
   - `UVPATH && uv --version` must print `uv 0.13.9` or newer;
   - `UVPATH && uv python find 3.13` must print a path to a Python 3.13 interpreter.
 
   Verify: all three outputs match.
-- [ ] 1.2 Create these files from the Appendix. `R` stands for `services/reporting-service`:
+- [x] 1.2 Create these files from the Appendix. `R` stands for `services/reporting-service`:
   - `R/pyproject.toml` (A1), `R/.python-version` (A2), `R/alembic.ini` (A3);
   - `R/reporting_service/__init__.py` (A4), `R/reporting_service/main.py` (A5), `R/reporting_service/log.py` (A6), `R/reporting_service/auth.py` (A7), `R/reporting_service/webhooks.py` (A8), `R/reporting_service/app.py` (A9), `R/reporting_service/db.py` (A10);
   - `R/migrations/env.py` (A11), `R/migrations/script.py.mako` (A12), `R/migrations/versions/0001_create_inbox.py` (A13);
@@ -43,7 +43,7 @@ Execution rules (read first):
   Verify:
   - `find services/reporting-service -type f -not -path "*/openspec/*" -not -path "*/.venv/*" -not -path "*/__pycache__/*" | wc -l` prints `19` (17 Appendix files, `uv.lock`, and the existing `README.md`);
   - `git diff --stat .gitignore` shows `1 insertion(+)` and no deletions.
-- [ ] 1.3 Install, lint, typecheck and test:
+- [x] 1.3 Install, lint, typecheck and test:
   ```bash
   UVPATH && cd services/reporting-service && uv sync --locked && uv run ruff check . && uv run ruff format --check . && uv run mypy && uv run pytest
   ```
@@ -51,14 +51,14 @@ Execution rules (read first):
   - every command exits 0; `ruff check` prints `All checks passed!`, `ruff format --check` reports every file as already formatted, and mypy prints `Success: no issues found in 13 source files`;
   - `diff services/reporting-service/uv.lock services/reporting-service/openspec/changes/service-skeleton/assets/uv.lock` prints nothing (the lockfile is unchanged);
   - the pytest summary line reads `16 passed, 3 skipped`. The 3 integration tests are skipped (`integration environment not set`), which is expected locally.
-- [ ] 1.4 Confirm that every outbound call has a timeout. Each command must print `1`:
+- [x] 1.4 Confirm that every outbound call has a timeout. Each command must print `1`:
   - `grep -c "^FETCH_TIMEOUT_SECONDS = 5$" services/reporting-service/reporting_service/auth.py`;
   - `grep -c "^SOCKET_TIMEOUT_SECONDS = 30$" services/reporting-service/reporting_service/db.py`;
   - `grep -c "^STATEMENT_TIMEOUT_MS = 30_000$" services/reporting-service/reporting_service/db.py`;
   - `grep -c "timeout=10," services/reporting-service/tests/test_integration.py`.
 
   Also confirm the schema boundary: `grep -rhn "schema=" services/reporting-service/migrations/versions` prints exactly two lines, both with `schema="reporting"`.
-- [ ] 1.5 Commit group 1: `git add .gitignore services/reporting-service/pyproject.toml services/reporting-service/uv.lock services/reporting-service/.python-version services/reporting-service/alembic.ini services/reporting-service/reporting_service services/reporting-service/migrations services/reporting-service/tests services/reporting-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `feat(reporting-service): FastAPI skeleton with JWT, webhook signatures and inbox table`. Verify:
+- [x] 1.5 Commit group 1: `git add .gitignore services/reporting-service/pyproject.toml services/reporting-service/uv.lock services/reporting-service/.python-version services/reporting-service/alembic.ini services/reporting-service/reporting_service services/reporting-service/migrations services/reporting-service/tests services/reporting-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `feat(reporting-service): FastAPI skeleton with JWT, webhook signatures and inbox table`. Verify:
   - `git status --porcelain` is empty;
   - `git ls-files services/reporting-service | grep -cE "(\.venv|__pycache__|_cache)/"` prints `0`.
 
