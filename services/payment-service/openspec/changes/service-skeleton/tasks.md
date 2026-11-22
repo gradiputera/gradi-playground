@@ -61,7 +61,7 @@ Execution rules (read first):
 
 ## 2. Container and Vercel configuration
 
-- [ ] 2.1 Create these files from the Appendix:
+- [x] 2.1 Create these files from the Appendix:
   - `services/payment-service/Dockerfile` (A11);
   - `services/payment-service/.dockerignore` (A12);
   - `services/payment-service/vercel.json` (A13).
@@ -70,7 +70,7 @@ Execution rules (read first):
   - `node -e "JSON.parse(require('fs').readFileSync('services/payment-service/vercel.json','utf8'))"` exits 0;
   - `cd services/payment-service && CGO_ENABLED=0 GOOS=linux GOTOOLCHAIN=go1.27.4 go build -trimpath -o "$TEMP/payment-service-linux" .` exits 0;
   - if `docker info` succeeds, `docker build -t payment-service:local services/payment-service` exits 0. If `docker info` fails, write down "local image build not run (Docker unavailable); CI is authoritative" for the PR.
-- [ ] 2.2 Commit group 2: run the secret scan, then `git add services/payment-service/Dockerfile services/payment-service/.dockerignore services/payment-service/vercel.json services/payment-service/openspec/changes/service-skeleton/tasks.md`, and commit with message `build(payment-service): container image and Vercel config`. Verify: `git status --porcelain` is empty.
+- [x] 2.2 Commit group 2: run the secret scan, then `git add services/payment-service/Dockerfile services/payment-service/.dockerignore services/payment-service/vercel.json services/payment-service/openspec/changes/service-skeleton/tasks.md`, and commit with message `build(payment-service): container image and Vercel config`. Verify: `git status --porcelain` is empty.
 
 ## 3. CI, contract and Dependabot
 
