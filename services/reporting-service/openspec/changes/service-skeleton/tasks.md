@@ -77,14 +77,14 @@ Execution rules (read first):
 
 ## 3. CI, contract and Dependabot
 
-- [ ] 3.1 Create `.github/workflows/reporting-service.yml` (A23). Replace `contracts/openapi/reporting.yaml` with A24. Append A25 to `.github/dependabot.yml`. Verify:
+- [x] 3.1 Create `.github/workflows/reporting-service.yml` (A23). Replace `contracts/openapi/reporting.yaml` with A24. Append A25 to `.github/dependabot.yml`. Verify:
   - `npx -y yaml-lint@1.7.0 .github/workflows/reporting-service.yml contracts/openapi/reporting.yaml .github/dependabot.yml` reports the files as valid;
   - `git diff --stat contracts/openapi/reporting.yaml` shows `6 insertions(+)` and no deletions;
   - `git diff --stat .github/dependabot.yml` shows `8 insertions(+)` and no deletions;
   - `grep -c "package-ecosystem" .github/dependabot.yml` prints `12`.
 
   The breaking-change check for the contract (oasdiff) runs in CI on the pull request. Do not run it locally.
-- [ ] 3.2 Commit group 3: `git add .github/workflows/reporting-service.yml contracts/openapi/reporting.yaml .github/dependabot.yml services/reporting-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `ci(reporting-service): build, test and contract checks`. Verify: `git status --porcelain` is empty.
+- [x] 3.2 Commit group 3: `git add .github/workflows/reporting-service.yml contracts/openapi/reporting.yaml .github/dependabot.yml services/reporting-service/openspec/changes/service-skeleton/tasks.md`, run the secret scan, and commit with message `ci(reporting-service): build, test and contract checks`. Verify: `git status --porcelain` is empty.
 
 ## 4. Documentation
 
