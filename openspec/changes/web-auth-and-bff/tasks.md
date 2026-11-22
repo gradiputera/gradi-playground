@@ -56,8 +56,8 @@ Execution rules (read first):
 
 ## 4. Auth tests and CI (specs: auth, web-routing)
 
-- [ ] 4.1 Replace `apps/web/vitest.config.ts` with A3, create `apps/web/test/e2e/auth.test.ts` (A18), and replace `.github/workflows/web.yml` with A19. Verify: `npx -y yaml-lint@1.7.0 .github/workflows/web.yml` reports the file as valid.
-- [ ] 4.2 Run the auth tests locally if Docker is available:
+- [x] 4.1 Replace `apps/web/vitest.config.ts` with A3, create `apps/web/test/e2e/auth.test.ts` (A18), and replace `.github/workflows/web.yml` with A19. Verify: `npx -y yaml-lint@1.7.0 .github/workflows/web.yml` reports the file as valid.
+- [x] 4.2 Run the auth tests locally if Docker is available:
   1. Run `docker info`. If it fails, skip the remaining steps, write down "local auth tests not run (Docker unavailable); CI is authoritative" for the PR, and go to task 4.3.
   2. Run `npx -y supabase@3.2.0 status`. If it reports the stack is running, remember that, so you do not stop it afterwards.
   3. If the stack is not running, start it:
@@ -72,7 +72,7 @@ Execution rules (read first):
   5. If you started the stack in step 3, stop it with `npx -y supabase@3.2.0 stop`.
 
   Verify: the test run prints `Tests  25 passed (25)`, or the "not run" note is written down.
-- [ ] 4.3 Commit group 4: run the secret scan, then `git add apps/web/vitest.config.ts apps/web/test .github/workflows/web.yml openspec/changes/web-auth-and-bff/tasks.md`, and commit with message `test(web): verify auth flows against local Supabase in CI`. Verify: `git status --porcelain` is empty.
+- [x] 4.3 Commit group 4: run the secret scan, then `git add apps/web/vitest.config.ts apps/web/test .github/workflows/web.yml openspec/changes/web-auth-and-bff/tasks.md`, and commit with message `test(web): verify auth flows against local Supabase in CI`. Verify: `git status --porcelain` is empty.
 
 ## 5. Documentation
 
