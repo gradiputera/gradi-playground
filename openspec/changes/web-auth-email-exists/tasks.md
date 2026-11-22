@@ -18,14 +18,14 @@ Execution rules (read first):
 
 ## 1. Callback fix and tests (spec: auth)
 
-- [ ] 1.1 Check the toolchain and the branch. `node --version` must start with `v26.`, `pnpm --version` must print `12.21.0`, and `git branch --show-current` must print `feat/web-auth-email-exists`. Then run `pnpm install --frozen-lockfile`. Verify: all three outputs match and the install exits 0.
-- [ ] 1.2 Replace `apps/web/server/routes/auth/callback.get.ts` with A1. Verify: `pnpm --filter web typecheck` exits 0.
-- [ ] 1.3 Insert the two tests from A2 into `apps/web/test/e2e/auth.test.ts`. Verify:
+- [x] 1.1 Check the toolchain and the branch. `node --version` must start with `v26.`, `pnpm --version` must print `12.21.0`, and `git branch --show-current` must print `feat/web-auth-email-exists`. Then run `pnpm install --frozen-lockfile`. Verify: all three outputs match and the install exits 0.
+- [x] 1.2 Replace `apps/web/server/routes/auth/callback.get.ts` with A1. Verify: `pnpm --filter web typecheck` exits 0.
+- [x] 1.3 Insert the two tests from A2 into `apps/web/test/e2e/auth.test.ts`. Verify:
   - `grep -c "^  it(" apps/web/test/e2e/auth.test.ts` prints `16`;
   - `grep -c "error_code=email_exists" apps/web/test/e2e/auth.test.ts` prints `2`;
   - `git diff --stat apps/web/test/e2e/auth.test.ts` shows only insertions (no `-` lines);
   - `pnpm --filter web typecheck` exits 0.
-- [ ] 1.4 Run the tests locally if Docker is available:
+- [x] 1.4 Run the tests locally if Docker is available:
   1. Run `docker info`. If it fails, skip the remaining steps, write down "local auth tests not run (Docker unavailable); CI is authoritative" for the PR, and go to task 1.5.
   2. Run `npx -y supabase@3.2.0 status`. If it reports the stack is running, remember that, so you do not stop it afterwards.
   3. If the stack is not running, start it:
@@ -40,7 +40,7 @@ Execution rules (read first):
   5. If you started the stack in step 3, stop it with `npx -y supabase@3.2.0 stop`.
 
   Verify: the test run prints `Tests  27 passed (27)`, or the "not run" note is written down.
-- [ ] 1.5 Commit group 1: run the secret scan, then `git add apps/web/server/routes/auth/callback.get.ts apps/web/test/e2e/auth.test.ts openspec/changes/web-auth-email-exists/tasks.md`, and commit with message `fix(web): sign in to the existing account when the Google email is already registered`. Verify: `git status --porcelain` is empty.
+- [x] 1.5 Commit group 1: run the secret scan, then `git add apps/web/server/routes/auth/callback.get.ts apps/web/test/e2e/auth.test.ts openspec/changes/web-auth-email-exists/tasks.md`, and commit with message `fix(web): sign in to the existing account when the Google email is already registered`. Verify: `git status --porcelain` is empty.
 
 ## 2. Documentation
 
