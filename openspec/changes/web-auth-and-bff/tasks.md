@@ -40,7 +40,7 @@ Execution rules (read first):
 
 ## 3. Playground shell (specs: auth, web-routing)
 
-- [ ] 3.1 Create these files:
+- [x] 3.1 Create these files:
   - `apps/web/app/composables/useAuth.ts` (A11);
   - `apps/web/app/components/TurnstileWidget.vue` (A12);
   - `apps/web/app/layouts/playground.vue` (A13).
@@ -52,7 +52,7 @@ Execution rules (read first):
   - `apps/web/app/assets/css/main.css` (A17).
 
   Verify: `pnpm --filter web typecheck` exits 0, and `pnpm --filter web exec vitest run test/e2e/web.test.ts` prints `Tests  11 passed (11)`.
-- [ ] 3.2 Commit group 3: run the secret scan, then `git add apps/web/app openspec/changes/web-auth-and-bff/tasks.md`, and commit with message `feat(web): guest session and identity header in the playground`. Verify: `git status --porcelain` is empty.
+- [x] 3.2 Commit group 3: run the secret scan, then `git add apps/web/app openspec/changes/web-auth-and-bff/tasks.md`, and commit with message `feat(web): guest session and identity header in the playground`. Verify: `git status --porcelain` is empty.
 
 ## 4. Auth tests and CI (specs: auth, web-routing)
 
