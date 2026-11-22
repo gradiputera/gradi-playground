@@ -60,14 +60,14 @@ Execution rules (read first):
 
 ## 4. Documentation
 
-- [ ] 4.1 Update `apps/web/README.md` as described in A20: replace the Status body, insert the four new sections between `## Status` and `## Route map`, and add the ADR 0003 line to `## Related`. Leave all other sections unchanged. Verify: `grep -c "^## " apps/web/README.md` prints `9`, and every relative link in the file points to an existing file.
-- [ ] 4.2 Update the root `README.md` roadmap:
+- [x] 4.1 Update `apps/web/README.md` as described in A20: replace the Status body, insert the four new sections between `## Status` and `## Route map`, and add the ADR 0003 line to `## Related`. Leave all other sections unchanged. Verify: `grep -c "^## " apps/web/README.md` prints `9`, and every relative link in the file points to an existing file.
+- [x] 4.2 Update the root `README.md` roadmap:
   - replace the line `All items are planned; none is implemented yet.` with `Items are delivered one OpenSpec change at a time.`;
   - in the table, change the status of row 1 from `Planned` to `Done`;
   - change the status of row 2 from `Planned` to `In progress`.
 
   Verify: `grep -n "| 1 |" README.md` ends with `| Done |`, and `grep -n "| 2 |" README.md` ends with `| In progress |`.
-- [ ] 4.3 Commit group 4: run the secret scan, then `git add apps/web/README.md README.md openspec/changes/web-skeleton-and-vercel-deploy/tasks.md`, and commit with message `docs(web): document local development and Vercel setup`. Verify: `git status --porcelain` is empty.
+- [x] 4.3 Commit group 4: run the secret scan, then `git add apps/web/README.md README.md openspec/changes/web-skeleton-and-vercel-deploy/tasks.md`, and commit with message `docs(web): document local development and Vercel setup`. Verify: `git status --porcelain` is empty.
 
 ## 5. Integration check and pull request
 
