@@ -4,7 +4,7 @@ This note describes how authentication and authorization work in gradi-playgroun
 
 ## Status
 
-Planned
+In progress: guest and Google sign-in, sessions and logout are implemented in the BFF (`apps/web`). Resource-server validation arrives with each service.
 
 ## OAuth2 roles in this system
 
@@ -88,6 +88,17 @@ Calls between services are planned to use the OAuth2 client credentials pattern:
 - **Algorithm confusion**: mitigated by pinning the allowed algorithms and rejecting `none`.
 - **Guest abuse**: mitigated by Turnstile, rate limits and nightly cleanup.
 - **Replay of signed events**: handled in the webhook layer (timestamp tolerance), not here.
+
+## BFF implementation
+
+The flows above are implemented in `apps/web`; its README lists the endpoints.
+
+- The BFF uses `@supabase/ssr` on the server only and writes every Supabase cookie itself, always `httpOnly`, `Secure` and `SameSite=Lax`: the session (`sb-<ref>-auth-token`, split into numbered chunks when large) and the PKCE verifier (`sb-<ref>-auth-token-code-verifier`).
+- `state` lives in the `gp-oauth-state` cookie (path `/auth`, 10 minutes, single use) and travels inside the callback URL. Supabase Auth accepts any callback on the Site URL's host, so `?state=` needs no extra redirect allow-list entry.
+- `POST` endpoints accept only requests whose `Origin` equals the site's own origin; `SameSite=Lax` is the second layer.
+- The session endpoint asks Supabase Auth (`getUser`) instead of trusting the cookie, so a revoked session reads as signed out and an expired access token is refreshed on the way.
+- A returning visitor on a new guest session cannot link a Google account that already belongs to their old user (`identity_already_exists`). The BFF ends the guest session and signs them in to the existing account; the new guest's sandbox data is dropped.
+- The browser learns only `guest` or `google` and a display name: no tokens, email address or user id.
 
 ## Related
 

@@ -76,7 +76,7 @@ Execution rules (read first):
 
 ## 5. Documentation
 
-- [ ] 5.1 Make the documentation changes:
+- [x] 5.1 Make the documentation changes:
   - create `apps/web/.env.example` (A20);
   - replace `apps/web/README.md` with A21;
   - make the two edits to `docs/security/auth.md` described in A22.
