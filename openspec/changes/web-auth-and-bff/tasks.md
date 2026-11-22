@@ -18,12 +18,12 @@ Execution rules (read first):
 
 ## 1. Dependencies
 
-- [ ] 1.1 Check the toolchain and the branch. `node --version` must start with `v26.`, `pnpm --version` must print `12.21.0`, and `git branch --show-current` must print `feat/web-auth-and-bff`. Verify: all three outputs match.
-- [ ] 1.2 Run `pnpm add --filter web @supabase/ssr@0.12.7 @supabase/supabase-js@2.119.2 --save-exact`. Verify:
+- [x] 1.1 Check the toolchain and the branch. `node --version` must start with `v26.`, `pnpm --version` must print `12.21.0`, and `git branch --show-current` must print `feat/web-auth-and-bff`. Verify: all three outputs match.
+- [x] 1.2 Run `pnpm add --filter web @supabase/ssr@0.12.7 @supabase/supabase-js@2.119.2 --save-exact`. Verify:
   - `apps/web/package.json` equals A1 exactly (compare line by line);
   - `pnpm install --frozen-lockfile` exits 0;
   - `git status --porcelain` lists only `apps/web/package.json` and `pnpm-lock.yaml`.
-- [ ] 1.3 Commit group 1: run the secret scan, then `git add apps/web/package.json pnpm-lock.yaml openspec/changes/web-auth-and-bff/tasks.md`, and commit with message `build(web): add Supabase server client dependencies`. Verify: `git status --porcelain` is empty.
+- [x] 1.3 Commit group 1: run the secret scan, then `git add apps/web/package.json pnpm-lock.yaml openspec/changes/web-auth-and-bff/tasks.md`, and commit with message `build(web): add Supabase server client dependencies`. Verify: `git status --porcelain` is empty.
 
 ## 2. BFF auth endpoints (spec: auth)
 
