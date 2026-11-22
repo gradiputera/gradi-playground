@@ -1,0 +1,6 @@
+packages:
+  - apps/*
+
+# pnpm 12 runs dependency build scripts only when they are allowed here.
+allowBuilds:
+  esbuild: true
