@@ -15,7 +15,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <vertx.version>5.2.3</vertx.version>
     <flyway.version>13.13.0</flyway.version>
-    <postgresql.version>42.7.14</postgresql.version>
+    <postgresql.version>42.7.15</postgresql.version>
     <junit.version>6.1.3</junit.version>
     <main.class>io.github.gradiputera.ledger.Main</main.class>
   </properties>
