@@ -1,6 +1,6 @@
 # One image for Vercel (Container runtime), Docker Compose and Kubernetes (ADR 0003).
 
-FROM ghcr.io/astral-sh/uv:0.13.9 AS uv
+FROM ghcr.io/astral-sh/uv:0.13.10 AS uv
 
 FROM python:3.13.18-slim-trixie AS build
 COPY --from=uv /uv /usr/local/bin/uv
