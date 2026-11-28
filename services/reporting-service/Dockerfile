@@ -2,7 +2,7 @@
 
 FROM ghcr.io/astral-sh/uv:0.13.9 AS uv
 
-FROM python:3.13.18-slim-trixie AS build
+FROM python:3.15.1-slim-trixie AS build
 COPY --from=uv /uv /usr/local/bin/uv
 # Use the image's Python, compile bytecode at build time, and put the environment in /app/.venv.
 ENV UV_PYTHON_DOWNLOADS=never UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy UV_PROJECT_ENVIRONMENT=/app/.venv
@@ -14,7 +14,7 @@ COPY reporting_service ./reporting_service
 COPY migrations ./migrations
 
 # Same Python base without uv, running as a non-root user.
-FROM python:3.13.18-slim-trixie
+FROM python:3.15.1-slim-trixie
 RUN useradd --system --uid 10001 --no-create-home --shell /usr/sbin/nologin app
 WORKDIR /app
 COPY --from=build /app /app
